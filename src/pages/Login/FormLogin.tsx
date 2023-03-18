@@ -1,5 +1,5 @@
 import ButtonPrimary from "../../components/Button/ButtonPrimary";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import DisplayError from "../../components/DisplayError";
@@ -38,33 +38,27 @@ function FormLogin() {
   return (
     <>
       {isError ? <DisplayError text={errorText} /> : null}
-      <div className="w3-section w3-margin-left w3-margin-right">
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="username">Username:</label>
-          <br />
-          <input
-            type="text"
-            id="username"
-            name="username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <br />
-          <label htmlFor="password">Password:</label>
-          <br />
-          <input
-            type="password"
-            id="password"
-            name="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <br />
-          <ButtonPrimary value="Log in" />
-        </form>
-        <p>
-          Don't have an account? Click <Link to="/register">here</Link> to
-          register!
-        </p>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="username">Username:</label>
+        <br />
+        <input
+          type="text"
+          id="username"
+          name="username"
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <br />
+        <label htmlFor="password">Password:</label>
+        <br />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <br />
+        <ButtonPrimary value="Log in" />
+      </form>
     </>
   );
 }

@@ -4,7 +4,7 @@ async function useLoginCheck() {
   let loggedIn = false;
 
   await axios
-    .get(`/authorise`, {
+    .get(`/authenticate`, {
       headers: {
         token: localStorage.token,
       },

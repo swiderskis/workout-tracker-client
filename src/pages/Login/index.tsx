@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import useLoginCheck from "../../hooks/useLoginCheck";
 import Loading from "../Loading";
 import FormLogin from "./FormLogin";
@@ -22,8 +22,11 @@ function Login() {
 
   return (
     <>
-      <h1>Login</h1>
       <FormLogin />
+      <p>
+        Don't have an account? Click <Link to="/register">here</Link> to
+        register!
+      </p>
     </>
   );
 }

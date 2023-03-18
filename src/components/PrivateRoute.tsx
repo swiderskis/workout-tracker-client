@@ -4,7 +4,7 @@ import useLoginCheck from "../hooks/useLoginCheck";
 import Loading from "../pages/Loading";
 
 interface PrivateRouteProps {
-  children: ReactNode;
+  children: JSX.Element;
 }
 
 function PrivateRoute(props: PrivateRouteProps) {

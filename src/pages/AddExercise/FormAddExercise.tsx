@@ -1,0 +1,127 @@
+import React, { useState } from "react";
+import DisplayError from "../../components/DisplayError";
+import muscleGroup from "../../objects/muscleGroup";
+import equipment from "../../objects/equipment";
+import ButtonPrimary from "../../components/Button/ButtonPrimary";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+function FormAddExercise() {
+  const [isError, setIsError] = useState(false);
+  const [errorText, setErrorText] = useState("");
+  const [exerciseName, setExerciseName] = useState("");
+  const [muscleGroupSelection, setMuscleGroupSelection] = useState("");
+  const [equipmentSelection, setEquipmentSelection] = useState<number[]>([]);
+  const [equipmentCheckbox, setEquipmentCheckbox] = useState(
+    new Array(equipment.length).fill(false)
+  );
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setIsError(false);
+
+    await axios
+      .post(
+        `/exercise/add`,
+        {
+          exerciseName,
+          muscleGroupSelection,
+          equipmentSelection,
+        },
+        {
+          headers: {
+            token: localStorage.token,
+          },
+        }
+      )
+      .then((res) => {
+        navigate("/");
+      })
+      .catch((err) => {
+        setIsError(true);
+        if (!err.response || err.response.status >= 500)
+          setErrorText(
+            "There was a problem adding your exercise, please try again later"
+          );
+        else if (err.response.status >= 400) setErrorText(err.response.data);
+      });
+  };
+
+  const handleCheckbox = (key: number) => {
+    // Toggles if checkbox should be checked or unchecked
+    const updateCheckbox = equipmentCheckbox.map((item, index) =>
+      index === key ? !item : item
+    );
+
+    setEquipmentCheckbox(updateCheckbox);
+
+    // Adds or removes selected equipment based on checkboxes
+    const selection = equipmentSelection;
+
+    if (selection.indexOf(key) != -1) {
+      selection.splice(selection.indexOf(key), 1);
+    } else {
+      selection.push(key);
+    }
+
+    setEquipmentSelection(selection);
+  };
+
+  return (
+    <>
+      {isError ? <DisplayError text={errorText} /> : null}
+      <br />
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="exercise-name">Exercise name:</label>
+        <br />
+        <input
+          type="text"
+          id="exercise-name"
+          name="exercise-name"
+          onChange={(e) => setExerciseName(e.target.value)}
+        ></input>
+        <br />
+        <br />
+        <label>Muscle group:</label>
+        <br />
+        <select
+          id="muscle-group"
+          name="muscle-group"
+          onChange={(e) => setMuscleGroupSelection(e.target.value)}
+        >
+          <option></option>
+          {muscleGroup.map((muscleGroup) => (
+            <option key={muscleGroup.key} value={muscleGroup.key}>
+              {muscleGroup.value}
+            </option>
+          ))}
+        </select>
+        <br />
+        <br />
+        <label>Equipment:</label>
+        <br />
+        <ul className="w3-ul" style={{ width: "30%" }}>
+          {equipment.map((equipment) => (
+            <li key={equipment.key}>
+              <input
+                type="checkbox"
+                id={equipment.value}
+                name={equipment.value}
+                value={equipment.key}
+                checked={equipmentCheckbox[equipment.key]}
+                onChange={() => handleCheckbox(equipment.key)}
+              />
+              <label htmlFor={equipment.value}> {equipment.value}</label>
+              <br />
+            </li>
+          ))}
+        </ul>
+        <ButtonPrimary value="Add exercise" />
+      </form>
+    </>
+  );
+}
+
+export default FormAddExercise;
