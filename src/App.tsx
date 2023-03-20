@@ -5,9 +5,11 @@ import NotFound from "./pages/NotFound";
 import Register from "./pages/Register";
 import axios from "axios";
 import PrivateRoute from "./components/PrivateRoute";
-import AddExercise from "./pages/AddExercise";
+import AddExercise from "./pages/Exercise/Add";
 import Navbar from "./components/Navbar/Navbar";
 import Header from "./components/Header";
+import ExerciseHome from "./pages/Exercise/Index";
+import ViewExercises from "./pages/Exercise/View";
 
 axios.defaults.baseURL = `http://localhost:5000`;
 
@@ -31,15 +33,33 @@ function App() {
               }
             />
             <Route
-              path="/add-exercise"
+              path="exercise"
               element={
                 <PrivateRoute>
-                  <AddExercise />
+                  <ExerciseHome />
                 </PrivateRoute>
               }
-            />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            >
+              <Route
+                path="add"
+                element={
+                  <PrivateRoute>
+                    <AddExercise />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="view"
+                element={
+                  <PrivateRoute>
+                    <ViewExercises />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

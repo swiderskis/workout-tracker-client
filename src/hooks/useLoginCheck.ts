@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Checks if user is logged in
 async function useLoginCheck() {
   let loggedIn = false;
 

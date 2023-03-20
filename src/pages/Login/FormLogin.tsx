@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import DisplayError from "../../components/DisplayError";
+import useErrorResponse from "../../hooks/useErrorResponse";
 
 function FormLogin() {
   const [isError, setIsError] = useState(false);
@@ -25,13 +26,7 @@ function FormLogin() {
       })
       .catch((err) => {
         setIsError(true);
-
-        // Server error
-        if (!err.response || err.response.status >= 500)
-          setErrorText(
-            "There was a problem logging you in, please try again later"
-          );
-        else if (err.response.status >= 400) setErrorText(err.response.data);
+        setErrorText(useErrorResponse(err));
       });
   };
 

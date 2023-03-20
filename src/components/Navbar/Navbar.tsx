@@ -10,7 +10,13 @@ function Navbar() {
   return (
     <div className="w3-bar w3-light-grey w3-border w3-margin-bottom">
       <NavItem path="/" value="Home" />
-      <NavItem path="/add-exercise" value="Add exercise" />
+      <div className="w3-dropdown-hover">
+        <button className="w3-button">Exercises</button>
+        <div className="w3-dropdown-content w3-bar-block w3-card-4 w3-light-grey">
+          <NavItem path="/exercise/add" value="Add exercise" />
+          <NavItem path="/exercise/view" value="View exercises" />
+        </div>
+      </div>
     </div>
   );
 }

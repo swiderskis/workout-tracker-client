@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import DisplayError from "../../components/DisplayError";
+import useErrorResponse from "../../hooks/useErrorResponse";
 
 function FormRegister() {
   const [username, setUsername] = useState("");
@@ -31,13 +32,7 @@ function FormRegister() {
       })
       .catch((err) => {
         setIsError(true);
-
-        // Server error
-        if (!err.response || err.response.status >= 500)
-          setErrorText(
-            "There was a problem registering your account, please try again later"
-          );
-        else if (err.response.status >= 400) setErrorText(err.response.data);
+        setErrorText(useErrorResponse(err));
       });
   };
 

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import DisplayError from "../../components/DisplayError";
-import muscleGroup from "../../objects/muscleGroup";
-import equipment from "../../objects/equipment";
-import ButtonPrimary from "../../components/Button/ButtonPrimary";
+import DisplayError from "../../../components/DisplayError";
+import muscleGroup from "../../../enums/muscleGroup";
+import equipment from "../../../enums/equipment";
+import ButtonPrimary from "../../../components/Button/ButtonPrimary";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import useErrorResponse from "../../../hooks/useErrorResponse";
 
 function FormAddExercise() {
   const [isError, setIsError] = useState(false);
@@ -41,11 +42,7 @@ function FormAddExercise() {
       })
       .catch((err) => {
         setIsError(true);
-        if (!err.response || err.response.status >= 500)
-          setErrorText(
-            "There was a problem adding your exercise, please try again later"
-          );
-        else if (err.response.status >= 400) setErrorText(err.response.data);
+        setErrorText(useErrorResponse(err));
       });
   };
 
@@ -72,7 +69,7 @@ function FormAddExercise() {
   return (
     <>
       {isError ? <DisplayError text={errorText} /> : null}
-      <br />
+
       <form onSubmit={handleSubmit}>
         <label htmlFor="exercise-name">Exercise name:</label>
         <br />
