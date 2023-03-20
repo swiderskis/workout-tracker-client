@@ -26,7 +26,11 @@ function Navbar() {
           <NavItem path="/exercise/view" value="View exercises" />
         </div>
       </div>
-      <button className="w3-button" style={{ float: "right" }} onClick={logout}>
+      <button
+        className="w3-button w3-ripple"
+        style={{ float: "right" }}
+        onClick={logout}
+      >
         Logout
       </button>
     </div>

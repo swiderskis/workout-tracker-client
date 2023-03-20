@@ -7,7 +7,7 @@ interface NavItemProps {
 
 function NavItem(props: NavItemProps) {
   return (
-    <Link to={props.path} className="w3-bar-item w3-button">
+    <Link to={props.path} className="w3-bar-item w3-button w3-ripple">
       {props.value}
     </Link>
   );
