@@ -1,8 +1,17 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import NavItem from "./NavItem";
 
 function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  function logout(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.preventDefault();
+
+    localStorage.removeItem("token");
+
+    navigate("/login");
+  }
 
   if (location.pathname === "/login" || location.pathname === "/register")
     return <></>;
@@ -17,6 +26,9 @@ function Navbar() {
           <NavItem path="/exercise/view" value="View exercises" />
         </div>
       </div>
+      <button className="w3-button" style={{ float: "right" }} onClick={logout}>
+        Logout
+      </button>
     </div>
   );
 }

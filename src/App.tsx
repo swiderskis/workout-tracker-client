@@ -8,7 +8,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import AddExercise from "./pages/Exercise/Add";
 import Navbar from "./components/Navbar/Navbar";
 import Header from "./components/Header";
-import ExerciseHome from "./pages/Exercise/Index";
+import ExerciseHome from "./pages/Exercise/Home";
 import ViewExercises from "./pages/Exercise/View";
 
 axios.defaults.baseURL = `http://localhost:5000`;
@@ -56,7 +56,6 @@ function App() {
                   </PrivateRoute>
                 }
               />
-              <Route path="*" element={<NotFound />} />
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
