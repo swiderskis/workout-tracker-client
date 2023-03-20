@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import DisplayError from "../../../components/DisplayError";
 import useErrorResponse from "../../../hooks/useErrorResponse";
 import Loading from "../../Loading";
 import { ExerciseInformation } from "./ExerciseInformation";
@@ -47,24 +48,28 @@ function ViewExercises() {
 
   return (
     <>
-      <table className="w3-table w3-striped w3-centered">
-        <thead>
-          <tr className="w3-light-grey">
-            <td>Exercise name</td>
-            <td>Muscle group</td>
-            <td>Actions</td>
-          </tr>
-        </thead>
-        {isError ? null : (
-          <tbody>
-            {exerciseInfo.map((exercise) => (
-              <tr key={exercise.exerciseId}>
-                <ExerciseListElement {...exercise} />
+      {isError ? (
+        <DisplayError text={errorText} />
+      ) : (
+        <>
+          <table className="w3-table w3-striped w3-centered">
+            <thead>
+              <tr className="w3-light-grey">
+                <td>Exercise name</td>
+                <td>Muscle group</td>
+                <td>Actions</td>
               </tr>
-            ))}
-          </tbody>
-        )}
-      </table>
+            </thead>
+            <tbody>
+              {exerciseInfo.map((exercise) => (
+                <tr key={exercise.exerciseId}>
+                  <ExerciseListElement {...exercise} />
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
     </>
   );
 }
