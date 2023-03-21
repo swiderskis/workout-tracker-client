@@ -10,5 +10,5 @@ The server side repo can be found [here](https://github.com/swiderskis/workout-t
 
 ## Credits
 
-CSS - [w3css](https://www.w3schools.com/w3css/default.asp)
+CSS - [W3.CSS](https://www.w3schools.com/w3css/default.asp)
 Favicon - [Icons8](https://icons8.com/icon/MOCeYrljNRDk/barbell)
