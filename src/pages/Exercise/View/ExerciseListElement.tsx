@@ -1,24 +1,17 @@
 import { Link } from "react-router-dom";
-import { ExerciseInformation } from "./ExerciseInformation";
+import { ExerciseListInfo } from "./ExerciseInformation";
 import muscleGroup from "../../../enums/muscleGroup";
+import useNameFromEnum from "../../../hooks/useNameFromEnum";
 
-function ExerciseListElement(exerciseInfo: ExerciseInformation) {
-  function muscleGroupNameFromId(id: number) {
-    let name = "";
-
-    muscleGroup.forEach((muscleGroup) => {
-      muscleGroup.key == id ? (name = muscleGroup.value) : null;
-    });
-
-    return name;
-  }
-
+function ExerciseListElement(exerciseInfo: ExerciseListInfo) {
   return (
     <>
       <td>{exerciseInfo.exerciseName}</td>
-      <td>{muscleGroupNameFromId(exerciseInfo.muscleGroupId)}</td>
+      <td>{useNameFromEnum(exerciseInfo.muscleGroupId, muscleGroup)}</td>
       <td>
-        <Link to="">View</Link>
+        <Link to={"/exercise/edit?exercise-id=" + exerciseInfo.exerciseId}>
+          Edit
+        </Link>
         <br />
         <Link to="">Delete</Link>
       </td>

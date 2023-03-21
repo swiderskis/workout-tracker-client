@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Header from "./components/Header";
 import ExerciseHome from "./pages/Exercise/Home";
 import ViewExercises from "./pages/Exercise/View";
+import EditExercise from "./pages/Exercise/Edit";
 
 axios.defaults.baseURL = `http://localhost:5000`;
 
@@ -53,6 +54,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <ViewExercises />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="edit"
+                element={
+                  <PrivateRoute>
+                    <EditExercise />
                   </PrivateRoute>
                 }
               />

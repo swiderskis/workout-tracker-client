@@ -14,9 +14,9 @@ function ViewExercises() {
   const [loading, setLoading] = useState(true);
   const [exerciseInfo, setExerciseInfo] = useState<ExerciseInformation[]>([]);
 
-  async function loadExercises() {
+  const loadExercises = async () => {
     await axios
-      .get("/exercise/view", {
+      .get(`/exercise/view`, {
         headers: {
           token: localStorage.token,
         },
@@ -30,7 +30,7 @@ function ViewExercises() {
       });
 
     setLoading(false);
-  }
+  };
 
   useEffect(() => {
     loadExercises();
@@ -51,24 +51,22 @@ function ViewExercises() {
       {isError ? (
         <DisplayError text={errorText} />
       ) : (
-        <>
-          <table className="w3-table w3-striped w3-centered">
-            <thead>
-              <tr className="w3-light-grey">
-                <td>Exercise name</td>
-                <td>Muscle group</td>
-                <td>Actions</td>
+        <table className="w3-table w3-striped w3-centered">
+          <thead>
+            <tr className="w3-light-grey">
+              <td>Exercise name</td>
+              <td>Muscle group</td>
+              <td>Actions</td>
+            </tr>
+          </thead>
+          <tbody>
+            {exerciseInfo.map((exercise) => (
+              <tr key={exercise.exerciseId}>
+                <ExerciseListElement {...exercise} />
               </tr>
-            </thead>
-            <tbody>
-              {exerciseInfo.map((exercise) => (
-                <tr key={exercise.exerciseId}>
-                  <ExerciseListElement {...exercise} />
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </>
+            ))}
+          </tbody>
+        </table>
       )}
     </>
   );

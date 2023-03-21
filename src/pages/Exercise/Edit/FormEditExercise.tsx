@@ -1,31 +1,34 @@
-import React, { useState } from "react";
-import DisplayError from "../../../components/DisplayError";
-import muscleGroup from "../../../enums/muscleGroup";
-import equipment from "../../../enums/equipment";
-import ButtonPrimary from "../../../components/Button/ButtonPrimary";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ButtonPrimary from "../../../components/Button/ButtonPrimary";
+import DisplayError from "../../../components/DisplayError";
+import equipment from "../../../enums/equipment";
+import muscleGroup from "../../../enums/muscleGroup";
 import useErrorResponse from "../../../hooks/useErrorResponse";
+import { ExerciseInformation } from "../View/ExerciseInformation";
 
-function FormAddExercise() {
+function FormEditExercise(props: ExerciseInformation) {
   const [isError, setIsError] = useState(false);
   const [errorText, setErrorText] = useState("");
-  const [exerciseName, setExerciseName] = useState("");
-  const [muscleGroupSelection, setMuscleGroupSelection] = useState<number>();
-  const [equipmentSelection, setEquipmentSelection] = useState<number[]>([]);
+  const [exerciseName, setExerciseName] = useState(props.exerciseName);
+  const [muscleGroupSelection, setMuscleGroupSelection] = useState(
+    props.muscleGroupId
+  );
+  const [equipmentSelection, setEquipmentSelection] = useState<number[]>(
+    props.equipmentIds
+  );
   const [equipmentCheckbox, setEquipmentCheckbox] = useState(
     new Array(equipment.length).fill(false)
   );
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    setIsError(false);
-
-    await axios
-      .post(
-        `/exercise/add`,
+    axios
+      .put(
+        `/exercise/update/` + props.exerciseId,
         {
           exerciseName,
           muscleGroupSelection,
@@ -38,7 +41,7 @@ function FormAddExercise() {
         }
       )
       .then((res) => {
-        navigate("/");
+        navigate("/exercise/view");
       })
       .catch((err) => {
         setIsError(true);
@@ -66,10 +69,20 @@ function FormAddExercise() {
     setEquipmentSelection(selection);
   };
 
+  // Set whether checkboxes are ticked or unticked when component is loaded
+  const setCheckboxes = () => {
+    equipmentCheckbox.forEach((_element, index) => {
+      equipmentSelection.includes(index)
+        ? (equipmentCheckbox[index] = true)
+        : null;
+    });
+  };
+
+  useEffect(() => setCheckboxes(), []);
+
   return (
     <>
       {isError ? <DisplayError text={errorText} /> : null}
-
       <form onSubmit={handleSubmit}>
         <label htmlFor="exercise-name">Exercise name:</label>
         <br />
@@ -77,15 +90,16 @@ function FormAddExercise() {
           type="text"
           id="exercise-name"
           name="exercise-name"
+          defaultValue={props.exerciseName}
           onChange={(e) => setExerciseName(e.target.value)}
         ></input>
         <br />
-        <br />
-        <label htmlFor="muscle-group">Muscle group:</label>
+        <br /> <label htmlFor="muscle-group">Muscle group:</label>
         <br />
         <select
           id="muscle-group"
           name="muscle-group"
+          defaultValue={props.muscleGroupId}
           onChange={(e) => setMuscleGroupSelection(parseInt(e.target.value))}
         >
           <option></option>
@@ -115,10 +129,10 @@ function FormAddExercise() {
             </li>
           ))}
         </ul>
-        <ButtonPrimary value="Add exercise" />
+        <ButtonPrimary value="Update exercise" />
       </form>
     </>
   );
 }
 
-export default FormAddExercise;
+export default FormEditExercise;
