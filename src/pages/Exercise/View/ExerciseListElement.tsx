@@ -13,7 +13,9 @@ function ExerciseListElement(exerciseInfo: ExerciseListInfo) {
           Edit
         </Link>
         <br />
-        <Link to="">Delete</Link>
+        <Link to={"/exercise/delete?exercise-id=" + exerciseInfo.exerciseId}>
+          Delete
+        </Link>
       </td>
     </>
   );

@@ -11,6 +11,7 @@ import Header from "./components/Header";
 import ExerciseHome from "./pages/Exercise/Home";
 import ViewExercises from "./pages/Exercise/View";
 import EditExercise from "./pages/Exercise/Edit";
+import DeleteExercise from "./pages/Exercise/Delete";
 
 axios.defaults.baseURL = `http://localhost:5000`;
 
@@ -62,6 +63,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <EditExercise />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="delete"
+                element={
+                  <PrivateRoute>
+                    <DeleteExercise />
                   </PrivateRoute>
                 }
               />
