@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import DisplayError from "../../../components/DisplayError";
 import useErrorResponse from "../../../hooks/useErrorResponse";
 import Loading from "../../Loading";
@@ -13,8 +13,11 @@ function EditExercise() {
   const [loading, setLoading] = useState(true);
   const [exerciseInfo, setExerciseInfo] = useState<ExerciseInformation>();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const loadExerciseInfo = async () => {
+    if (!searchParams.get("exercise-id")) navigate("/exercise/view");
+
     await axios
       .get("/exercise/view/" + searchParams.get("exercise-id"), {
         headers: {
