@@ -38,7 +38,7 @@ function FormAddExercise() {
         }
       )
       .then((res) => {
-        navigate("/");
+        navigate("/exercise/view");
       })
       .catch((err) => {
         setIsError(true);
