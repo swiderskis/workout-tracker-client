@@ -28,6 +28,12 @@ function FormEditExercise(props: ExerciseInformation) {
 
     setIsError(false);
 
+    if (muscleGroupSelection === -1) {
+      setIsError(true);
+      setErrorText("Please fill in all fields");
+      return;
+    }
+
     await axios
       .put(
         `/exercise/update/` + props.exerciseId,
@@ -104,7 +110,7 @@ function FormEditExercise(props: ExerciseInformation) {
           defaultValue={props.muscleGroupId}
           onChange={(e) => setMuscleGroupSelection(parseInt(e.target.value))}
         >
-          <option></option>
+          <option key={-1} value={-1}></option>
           {muscleGroup.map((muscleGroup) => (
             <option key={muscleGroup.key} value={muscleGroup.key}>
               {muscleGroup.value}

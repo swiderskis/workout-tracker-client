@@ -55,7 +55,7 @@ function ViewExercises() {
         <DisplayError text={errorText} />
       ) : (
         <>
-          <label htmlFor="exercise-search">Search: </label>
+          <label htmlFor="exercise-search">Exercise name: </label>
           <input
             type="text"
             id="exercise-search"

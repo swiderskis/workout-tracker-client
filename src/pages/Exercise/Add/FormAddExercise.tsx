@@ -11,7 +11,7 @@ function FormAddExercise() {
   const [isError, setIsError] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [exerciseName, setExerciseName] = useState("");
-  const [muscleGroupSelection, setMuscleGroupSelection] = useState<number>();
+  const [muscleGroupSelection, setMuscleGroupSelection] = useState(-1);
   const [equipmentSelection, setEquipmentSelection] = useState<number[]>([]);
   const [equipmentCheckbox, setEquipmentCheckbox] = useState(
     new Array(equipment.length).fill(false)
@@ -22,6 +22,12 @@ function FormAddExercise() {
     e.preventDefault();
 
     setIsError(false);
+
+    if (muscleGroupSelection === -1) {
+      setIsError(true);
+      setErrorText("Please fill in all fields");
+      return;
+    }
 
     await axios
       .post(
@@ -86,7 +92,7 @@ function FormAddExercise() {
           name="muscle-group"
           onChange={(e) => setMuscleGroupSelection(parseInt(e.target.value))}
         >
-          <option></option>
+          <option key={-1} value={-1}></option>
           {muscleGroup.map((muscleGroup) => (
             <option key={muscleGroup.key} value={muscleGroup.key}>
               {muscleGroup.value}

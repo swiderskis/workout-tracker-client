@@ -1,13 +1,13 @@
 import ButtonProps from "./ButtonProps";
 
 function ButtonSecondary(props: ButtonProps) {
-  function clickAction(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    e.preventDefault();
-
+  const clickAction = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (props.handleClick) {
+      e.preventDefault();
+
       props.handleClick();
     }
-  }
+  };
 
   return (
     <button
