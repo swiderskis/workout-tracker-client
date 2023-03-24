@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import ButtonSecondary from "../../../components/Button/ButtonSecondary";
 import DisplayError from "../../../components/DisplayError";
 import useErrorResponse from "../../../hooks/useErrorResponse";
 import Loading from "../../Loading";
@@ -35,6 +36,10 @@ function EditExercise() {
     setLoading(false);
   };
 
+  const backClick = () => {
+    navigate("/exercise/view");
+  };
+
   useEffect(() => {
     loadExerciseInfo();
   }, []);
@@ -48,6 +53,7 @@ function EditExercise() {
       <h3>Editing exercise: {exerciseInfo?.exerciseName}</h3>
 
       <FormEditExercise {...(exerciseInfo as ExerciseInformation)} />
+      <ButtonSecondary value="Back" handleClick={backClick} />
     </>
   );
 }

@@ -69,7 +69,6 @@ function FormAddExercise() {
   return (
     <>
       {isError ? <DisplayError text={errorText} /> : null}
-
       <form onSubmit={handleSubmit}>
         <label htmlFor="exercise-name">Exercise name:</label>
         <br />
