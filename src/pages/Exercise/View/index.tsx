@@ -15,7 +15,7 @@ function ViewExercises() {
   const [loading, setLoading] = useState(true);
   const [exerciseInfo, setExerciseInfo] = useState<ExerciseInformation[]>([]);
   const [search, setSearch] = useState("");
-  const [muscleGroupSelection, setMuscleGroupSelection] = useState<number>();
+  const [muscleGroupSelection, setMuscleGroupSelection] = useState(-1);
 
   const loadExercises = async () => {
     await axios
