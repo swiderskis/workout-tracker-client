@@ -79,8 +79,7 @@ function FormAddExercise() {
           name="exercise-name"
           onChange={(e) => setExerciseName(e.target.value)}
         ></input>
-        <br />
-        <br />
+        <p />
         <label htmlFor="muscle-group">Muscle group:</label>
         <br />
         <select
@@ -95,8 +94,7 @@ function FormAddExercise() {
             </option>
           ))}
         </select>
-        <br />
-        <br />
+        <p />
         <label>Equipment:</label>
         <br />
         <ul className="w3-ul" style={{ width: "30%" }}>

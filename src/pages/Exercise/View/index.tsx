@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DisplayError from "../../../components/DisplayError";
+import muscleGroup from "../../../enums/muscleGroup";
 import useErrorResponse from "../../../hooks/useErrorResponse";
 import Loading from "../../Loading";
 import { ExerciseInformation } from "./ExerciseInformation";
@@ -13,6 +14,8 @@ function ViewExercises() {
   const [errorText, setErrorText] = useState("");
   const [loading, setLoading] = useState(true);
   const [exerciseInfo, setExerciseInfo] = useState<ExerciseInformation[]>([]);
+  const [search, setSearch] = useState("");
+  const [muscleGroupSelection, setMuscleGroupSelection] = useState<number>();
 
   const loadExercises = async () => {
     await axios
@@ -51,22 +54,52 @@ function ViewExercises() {
       {isError ? (
         <DisplayError text={errorText} />
       ) : (
-        <table className="w3-table w3-striped w3-centered">
-          <thead>
-            <tr className="w3-light-grey">
-              <td>Exercise name</td>
-              <td>Muscle group</td>
-              <td>Actions</td>
-            </tr>
-          </thead>
-          <tbody>
-            {exerciseInfo.map((exercise) => (
-              <tr key={exercise.exerciseId}>
-                <ExerciseListElement {...exercise} />
-              </tr>
+        <>
+          <label htmlFor="exercise-search">Search: </label>
+          <input
+            type="text"
+            id="exercise-search"
+            name="exercise-search"
+            onChange={(e) => setSearch(e.target.value)}
+          ></input>
+          <p></p>
+          <label htmlFor="muscle-group"> Muscle group: </label>
+          <select
+            id="muscle-group"
+            name="muscle-group"
+            onChange={(e) => setMuscleGroupSelection(parseInt(e.target.value))}
+          >
+            <option value={-1}></option>
+            {muscleGroup.map((muscleGroup) => (
+              <option key={muscleGroup.key} value={muscleGroup.key}>
+                {muscleGroup.value}
+              </option>
             ))}
-          </tbody>
-        </table>
+          </select>
+          <p></p>
+          <table className="w3-table w3-striped w3-centered">
+            <thead>
+              <tr className="w3-light-grey">
+                <td>Exercise name</td>
+                <td>Muscle group</td>
+                <td>Actions</td>
+              </tr>
+            </thead>
+            <tbody>
+              {exerciseInfo.map((exercise) => (
+                <tr key={exercise.exerciseId}>
+                  {exercise.exerciseName
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) &&
+                  (muscleGroupSelection === -1 ||
+                    muscleGroupSelection === exercise.muscleGroupId) ? (
+                    <ExerciseListElement {...exercise} />
+                  ) : null}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
       )}
     </>
   );

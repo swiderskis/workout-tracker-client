@@ -26,7 +26,9 @@ function FormEditExercise(props: ExerciseInformation) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    axios
+    setIsError(false);
+
+    await axios
       .put(
         `/exercise/update/` + props.exerciseId,
         {
@@ -93,8 +95,8 @@ function FormEditExercise(props: ExerciseInformation) {
           defaultValue={props.exerciseName}
           onChange={(e) => setExerciseName(e.target.value)}
         ></input>
-        <br />
-        <br /> <label htmlFor="muscle-group">Muscle group:</label>
+        <p />
+        <label htmlFor="muscle-group">Muscle group:</label>
         <br />
         <select
           id="muscle-group"
@@ -109,8 +111,7 @@ function FormEditExercise(props: ExerciseInformation) {
             </option>
           ))}
         </select>
-        <br />
-        <br />
+        <p />
         <label>Equipment:</label>
         <br />
         <ul className="w3-ul" style={{ width: "30%" }}>

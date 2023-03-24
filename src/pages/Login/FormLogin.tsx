@@ -40,7 +40,7 @@ function FormLogin() {
           type="text"
           id="username"
           name="username"
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value.toLowerCase())}
         />
         <br />
         <label htmlFor="password">Password:</label>
