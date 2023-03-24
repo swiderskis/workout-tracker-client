@@ -53,7 +53,7 @@ function EditExercise() {
       <h3>Editing exercise: {exerciseInfo?.exerciseName}</h3>
 
       <FormEditExercise {...(exerciseInfo as ExerciseInformation)} />
-      <ButtonSecondary value="Back" handleClick={backClick} />
+      <ButtonSecondary value="Back" onClick={backClick} />
     </>
   );
 }

@@ -23,7 +23,7 @@ function FormEditExercise(props: ExerciseInformation) {
   );
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setIsError(false);

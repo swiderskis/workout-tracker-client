@@ -12,7 +12,7 @@ function AddExercise() {
   return (
     <>
       <FormAddExercise />
-      <ButtonSecondary value="Back" handleClick={backClick} />
+      <ButtonSecondary value="Back" onClick={backClick} />
     </>
   );
 }

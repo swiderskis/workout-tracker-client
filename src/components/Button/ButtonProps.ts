@@ -1,6 +1,6 @@
 interface ButtonProps {
   value: string;
-  handleClick?: () => void;
+  onClick?: () => void;
 }
 
 export default ButtonProps;
