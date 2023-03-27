@@ -24,6 +24,20 @@ function FormAddWorkout() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    let setsOrRepsInvalid = false;
+
+    workoutExercises.forEach((exercise) => {
+      if (exercise.sets < 1 || exercise.reps < 1) {
+        setsOrRepsInvalid = true;
+      }
+    });
+
+    if (setsOrRepsInvalid) {
+      setIsError(true);
+      setErrorText("Please input sets and reps for all exercises");
+      return;
+    }
+
     setIsError(false);
   };
 
@@ -35,7 +49,10 @@ function FormAddWorkout() {
     equipmentId: number
   ) => {
     if (exerciseEquipmentLinkId === -1 || equipmentId === -1) {
-      return [false, "Please choose the equipment for this exercise"];
+      return {
+        success: false,
+        errorMessage: "Please choose the equipment for this exercise",
+      };
     }
 
     let exerciseAdded = false;
@@ -47,10 +64,11 @@ function FormAddWorkout() {
     });
 
     if (exerciseAdded)
-      return [
-        false,
-        "This exercise & equipment combination is already in your workout",
-      ];
+      return {
+        success: false,
+        errorMessage:
+          "This exercise & equipment combination is already in your workout",
+      };
 
     const currentWorkoutExercises = workoutExercises.slice(0);
     const sets = -1;
@@ -68,7 +86,7 @@ function FormAddWorkout() {
 
     setWorkoutExercises(currentWorkoutExercises);
 
-    return [true, ""];
+    return { success: true, errorMessage: "" };
   };
 
   const removeExercise = (index: number) => {

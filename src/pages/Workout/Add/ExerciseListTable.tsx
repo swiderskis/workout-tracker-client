@@ -16,7 +16,7 @@ interface ExerciseListTableProps {
     muscleGroupId: number,
     exerciseEquipmentLinkId: number,
     equipmentId: number
-  ) => (string | boolean)[];
+  ) => { success: boolean; errorMessage: string };
 }
 
 function ExerciseListTable(props: ExerciseListTableProps) {
@@ -143,11 +143,11 @@ function ExerciseListTable(props: ExerciseListTableProps) {
                     selectedLinkIds[index],
                     selectedEquipmentIds[index]
                   );
-                  if (pushExerciseRes[0]) {
+                  if (pushExerciseRes.success) {
                     props.modalError(false, "");
                     props.hideModal();
                   } else {
-                    props.modalError(true, pushExerciseRes[1] as string);
+                    props.modalError(true, pushExerciseRes.errorMessage);
                   }
                 }}
               >
