@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ButtonPrimary from "../../../components/Button/ButtonPrimary";
 import DisplayError from "../../../components/DisplayError";
 import Modal from "../../../components/Modal";
 import day from "../../../enums/day";
 import equipment from "../../../enums/equipment";
 import muscleGroup from "../../../enums/muscleGroup";
+import useErrorResponse from "../../../hooks/useErrorResponse";
 import useNameFromEnum from "../../../hooks/useNameFromEnum";
 import { WorkoutExerciseSelection } from "../../../interfaces/WorkoutExerciseInfo";
 import ExerciseListTable from "./ExerciseListTable";
@@ -17,13 +20,29 @@ function FormAddWorkout() {
   const [workoutExercises, setWorkoutExercises] = useState<
     WorkoutExerciseSelection[]
   >([]);
-  const [showModal, setShowModal] = useState(false);
+  const [modalShown, setModalShown] = useState(false);
   const [modalIsError, setModalIsError] = useState(false);
   const [modalErrorText, setModalErrorText] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Check at least one exercise has been added
+    if (workoutExercises.length === 0) {
+      setIsError(true);
+      setErrorText("Please select at least one exercise for this workout");
+      return;
+    }
+
+    // Check a valid day has been selected
+    if (workoutDay < 0) {
+      setIsError(true);
+      setErrorText("Please input a valid day for the workout");
+      return;
+    }
+
+    // Check a valid number of sets / reps has been inputted
     let setsOrRepsInvalid = false;
 
     workoutExercises.forEach((exercise) => {
@@ -39,6 +58,28 @@ function FormAddWorkout() {
     }
 
     setIsError(false);
+
+    await axios
+      .post(
+        "/workout/add",
+        {
+          workoutName,
+          workoutDay,
+          workoutExercises,
+        },
+        {
+          headers: {
+            token: localStorage.token,
+          },
+        }
+      )
+      .then((res) => {
+        navigate("/");
+      })
+      .catch((err) => {
+        setIsError(true);
+        setErrorText(useErrorResponse(err));
+      });
   };
 
   const pushExercise = (
@@ -93,7 +134,20 @@ function FormAddWorkout() {
     const currentWorkoutExercises = workoutExercises.slice(0);
 
     currentWorkoutExercises.splice(index, 1);
+    setWorkoutExercises(currentWorkoutExercises);
+  };
 
+  const changeExerciseSets = (index: number, sets: number) => {
+    const currentWorkoutExercises = workoutExercises.slice(0);
+
+    currentWorkoutExercises[index].sets = sets;
+    setWorkoutExercises(currentWorkoutExercises);
+  };
+
+  const changeExerciseReps = (index: number, reps: number) => {
+    const currentWorkoutExercises = workoutExercises.slice(0);
+
+    currentWorkoutExercises[index].reps = reps;
     setWorkoutExercises(currentWorkoutExercises);
   };
 
@@ -103,7 +157,7 @@ function FormAddWorkout() {
   };
 
   const hideModal = () => {
-    setShowModal(false);
+    setModalShown(false);
   };
 
   return (
@@ -157,7 +211,7 @@ function FormAddWorkout() {
                     size={1}
                     style={{ textAlign: "center" }}
                     onChange={(e) =>
-                      (workoutExercises[index].sets = Number(e.target.value))
+                      changeExerciseSets(index, Number(e.target.value))
                     }
                   ></input>
                 </td>
@@ -166,7 +220,7 @@ function FormAddWorkout() {
                     size={1}
                     style={{ textAlign: "center" }}
                     onChange={(e) =>
-                      (workoutExercises[index].reps = Number(e.target.value))
+                      changeExerciseReps(index, Number(e.target.value))
                     }
                   ></input>
                 </td>
@@ -194,7 +248,7 @@ function FormAddWorkout() {
               <td>
                 <span
                   style={{ textDecoration: "underline", cursor: "pointer" }}
-                  onClick={() => setShowModal(true)}
+                  onClick={() => setModalShown(true)}
                 >
                   Add
                 </span>
@@ -204,7 +258,7 @@ function FormAddWorkout() {
         </table>
         <ButtonPrimary value="Submit" />
       </form>
-      <Modal showModal={showModal} hideModal={hideModal}>
+      <Modal modalShown={modalShown} hideModal={hideModal}>
         {modalIsError ? <DisplayError text={modalErrorText} /> : <></>}
         <ExerciseListTable
           modalError={modalError}

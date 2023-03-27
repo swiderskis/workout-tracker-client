@@ -1,5 +1,5 @@
 interface ModalProps {
-  showModal: boolean;
+  modalShown: boolean;
   hideModal: () => void;
   children: JSX.Element | JSX.Element[];
 }
@@ -8,7 +8,7 @@ function Modal(props: ModalProps) {
   return (
     <div
       className="w3-modal"
-      style={{ display: props.showModal ? "block" : "none" }}
+      style={{ display: props.modalShown ? "block" : "none" }}
     >
       <div className="w3-modal-content">
         <div className="w3-container">
