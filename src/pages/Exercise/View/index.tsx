@@ -5,7 +5,7 @@ import DisplayError from "../../../components/DisplayError";
 import muscleGroup from "../../../enums/muscleGroup";
 import useErrorResponse from "../../../hooks/useErrorResponse";
 import Loading from "../../Loading";
-import { ExerciseInformation } from "./ExerciseInformation";
+import { ExerciseInformation } from "../../../interfaces/ExerciseInformation";
 
 import ExerciseListElement from "./ExerciseListElement";
 
@@ -62,12 +62,12 @@ function ViewExercises() {
             name="exercise-search"
             onChange={(e) => setSearch(e.target.value)}
           ></input>
-          <p></p>
+          <p />
           <label htmlFor="muscle-group"> Muscle group: </label>
           <select
             id="muscle-group"
             name="muscle-group"
-            onChange={(e) => setMuscleGroupSelection(parseInt(e.target.value))}
+            onChange={(e) => setMuscleGroupSelection(Number(e.target.value))}
           >
             <option value={-1}></option>
             {muscleGroup.map((muscleGroup) => (
@@ -76,7 +76,7 @@ function ViewExercises() {
               </option>
             ))}
           </select>
-          <p></p>
+          <p />
           <table className="w3-table w3-striped w3-centered">
             <thead>
               <tr className="w3-light-grey">

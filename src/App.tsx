@@ -12,6 +12,8 @@ import ExerciseHome from "./pages/Exercise/Home";
 import ViewExercises from "./pages/Exercise/View";
 import EditExercise from "./pages/Exercise/Edit";
 import DeleteExercise from "./pages/Exercise/Delete";
+import WorkoutHome from "./pages/Workout/Home";
+import AddWorkout from "./pages/Workout/Add";
 
 axios.defaults.baseURL = `http://localhost:5000`;
 
@@ -42,38 +44,20 @@ function App() {
                 </PrivateRoute>
               }
             >
-              <Route
-                path="add"
-                element={
-                  <PrivateRoute>
-                    <AddExercise />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="view"
-                element={
-                  <PrivateRoute>
-                    <ViewExercises />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="edit"
-                element={
-                  <PrivateRoute>
-                    <EditExercise />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="delete"
-                element={
-                  <PrivateRoute>
-                    <DeleteExercise />
-                  </PrivateRoute>
-                }
-              />
+              <Route path="add" element={<AddExercise />} />
+              <Route path="view" element={<ViewExercises />} />
+              <Route path="edit" element={<EditExercise />} />
+              <Route path="delete" element={<DeleteExercise />} />
+            </Route>
+            <Route
+              path="workout"
+              element={
+                <PrivateRoute>
+                  <WorkoutHome />
+                </PrivateRoute>
+              }
+            >
+              <Route path="add" element={<AddWorkout />} />
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />

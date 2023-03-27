@@ -90,7 +90,7 @@ function FormAddExercise() {
         <select
           id="muscle-group"
           name="muscle-group"
-          onChange={(e) => setMuscleGroupSelection(parseInt(e.target.value))}
+          onChange={(e) => setMuscleGroupSelection(Number(e.target.value))}
         >
           <option key={-1} value={-1}></option>
           {muscleGroup.map((muscleGroup) => (

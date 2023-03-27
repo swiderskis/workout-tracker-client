@@ -6,7 +6,7 @@ import DisplayError from "../../../components/DisplayError";
 import equipment from "../../../enums/equipment";
 import muscleGroup from "../../../enums/muscleGroup";
 import useErrorResponse from "../../../hooks/useErrorResponse";
-import { ExerciseInformation } from "../View/ExerciseInformation";
+import { ExerciseInformation } from "../../../interfaces/ExerciseInformation";
 
 function FormEditExercise(props: ExerciseInformation) {
   const [isError, setIsError] = useState(false);
@@ -108,7 +108,7 @@ function FormEditExercise(props: ExerciseInformation) {
           id="muscle-group"
           name="muscle-group"
           defaultValue={props.muscleGroupId}
-          onChange={(e) => setMuscleGroupSelection(parseInt(e.target.value))}
+          onChange={(e) => setMuscleGroupSelection(Number(e.target.value))}
         >
           <option key={-1} value={-1}></option>
           {muscleGroup.map((muscleGroup) => (

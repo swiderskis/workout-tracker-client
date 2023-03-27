@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ExerciseListInfo } from "./ExerciseInformation";
+import { ExerciseListInfo } from "../../../interfaces/ExerciseInformation";
 import muscleGroup from "../../../enums/muscleGroup";
 import useNameFromEnum from "../../../hooks/useNameFromEnum";
 

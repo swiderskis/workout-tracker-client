@@ -5,7 +5,7 @@ import ButtonSecondary from "../../../components/Button/ButtonSecondary";
 import DisplayError from "../../../components/DisplayError";
 import useErrorResponse from "../../../hooks/useErrorResponse";
 import Loading from "../../Loading";
-import { ExerciseInformation } from "../View/ExerciseInformation";
+import { ExerciseInformation } from "../../../interfaces/ExerciseInformation";
 import FormEditExercise from "./FormEditExercise";
 
 function EditExercise() {
