@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import DisplayError from "../../components/DisplayError";
 import useErrorResponse from "../../hooks/useErrorResponse";
+import TextInput from "../../components/Form/TextInput";
 
 function FormLogin() {
   const [isError, setIsError] = useState(false);
@@ -34,22 +35,13 @@ function FormLogin() {
     <>
       {isError ? <DisplayError text={errorText} /> : null}
       <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
+        <TextInput label="Username" name="username" setState={setUsername} />
         <br />
-        <input
-          type="text"
-          id="username"
-          name="username"
-          onChange={(e) => setUsername(e.target.value.toLowerCase())}
-        />
-        <br />
-        <label htmlFor="password">Password:</label>
-        <br />
-        <input
-          type="password"
-          id="password"
+        <TextInput
+          label="Password"
           name="password"
-          onChange={(e) => setPassword(e.target.value)}
+          setState={setPassword}
+          password={true}
         />
         <br />
         <ButtonPrimary value="Log in" />

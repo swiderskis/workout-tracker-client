@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ButtonPrimary from "../../../components/Button/ButtonPrimary";
 import DisplayError from "../../../components/DisplayError";
+import SelectInput from "../../../components/Form/SelectInput";
+import TextInput from "../../../components/Form/TextInput";
 import Modal from "../../../components/Modal";
 import day from "../../../enums/day";
 import equipment from "../../../enums/equipment";
@@ -164,29 +166,18 @@ function FormAddWorkout() {
     <>
       {isError ? <DisplayError text={errorText} /> : null}
       <form onSubmit={handleSubmit}>
-        <label htmlFor="workout-name">Workout name:</label>
-        <br />
-        <input
-          type="text"
-          id="workout-name"
+        <TextInput
+          label="Workout name"
           name="workout-name"
-          onChange={(e) => setWorkoutName(e.target.value)}
+          setState={setWorkoutName}
         />
         <p />
-        <label htmlFor="workout-day">Day:</label>
-        <br />
-        <select
-          id="workout-day"
+        <SelectInput
+          label="Day"
           name="workout-day"
-          onChange={(e) => setWorkoutDay(Number(e.target.value))}
-        >
-          <option key={-1} value={-1}></option>
-          {day.map((day) => (
-            <option key={day.key} value={day.key}>
-              {day.value}
-            </option>
-          ))}
-        </select>
+          setState={setWorkoutDay}
+          enum={day}
+        />
         <p />
         <label htmlFor="exercises">Exercises:</label>
         <table className="w3-table w3-striped w3-centered" id="exercises">
@@ -230,7 +221,7 @@ function FormAddWorkout() {
                       textDecoration: "underline",
                       cursor: "pointer",
                     }}
-                    onClick={(e) => {
+                    onClick={() => {
                       removeExercise(index);
                     }}
                   >

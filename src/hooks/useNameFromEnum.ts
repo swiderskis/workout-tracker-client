@@ -1,7 +1,4 @@
-interface EnumObject {
-  key: number;
-  value: string;
-}
+import { EnumObject } from "../interfaces/EnumObject";
 
 // Receives an id and returns the corresponding name in enum
 function useNameFromEnum(id: number, enumObject: EnumObject[]) {

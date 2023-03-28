@@ -1,9 +1,10 @@
 import ButtonPrimary from "../../components/Button/ButtonPrimary";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DisplayError from "../../components/DisplayError";
 import useErrorResponse from "../../hooks/useErrorResponse";
+import TextInput from "../../components/Form/TextInput";
 
 function FormRegister() {
   const [username, setUsername] = useState("");
@@ -36,35 +37,28 @@ function FormRegister() {
       });
   };
 
+  useEffect(() => {
+    setUsername(username.toLowerCase());
+  }, [username]);
+
   return (
     <>
       {isError ? <DisplayError text={errorText} /> : null}
       <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
+        <TextInput label="Username" name="username" setState={setUsername} />
         <br />
-        <input
-          type="text"
-          id="username"
-          name="username"
-          onChange={(e) => setUsername(e.target.value.toLowerCase())}
-        />
-        <br />
-        <label htmlFor="password">Password:</label>
-        <br />
-        <input
-          type="password"
-          id="password"
+        <TextInput
+          label="Password"
           name="password"
-          onChange={(e) => setPassword(e.target.value)}
+          setState={setPassword}
+          password={true}
         />
         <br />
-        <label htmlFor="confirm-password">Confirm password:</label>
-        <br />
-        <input
-          type="password"
-          id="confirm-password"
+        <TextInput
+          label="Confirm Password"
           name="confirm-password"
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          setState={setConfirmPassword}
+          password={true}
         />
         <br />
         <ButtonPrimary value="Register" />{" "}

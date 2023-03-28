@@ -6,6 +6,8 @@ import ButtonPrimary from "../../../components/Button/ButtonPrimary";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useErrorResponse from "../../../hooks/useErrorResponse";
+import TextInput from "../../../components/Form/TextInput";
+import SelectInput from "../../../components/Form/SelectInput";
 
 function FormAddExercise() {
   const [isError, setIsError] = useState(false);
@@ -76,29 +78,18 @@ function FormAddExercise() {
     <>
       {isError ? <DisplayError text={errorText} /> : null}
       <form onSubmit={handleSubmit}>
-        <label htmlFor="exercise-name">Exercise name:</label>
-        <br />
-        <input
-          type="text"
-          id="exercise-name"
+        <TextInput
+          label="Exercise name"
           name="exercise-name"
-          onChange={(e) => setExerciseName(e.target.value)}
-        ></input>
+          setState={setExerciseName}
+        />
         <p />
-        <label htmlFor="muscle-group">Muscle group:</label>
-        <br />
-        <select
-          id="muscle-group"
+        <SelectInput
+          label="Muscle group"
           name="muscle-group"
-          onChange={(e) => setMuscleGroupSelection(Number(e.target.value))}
-        >
-          <option key={-1} value={-1}></option>
-          {muscleGroup.map((muscleGroup) => (
-            <option key={muscleGroup.key} value={muscleGroup.key}>
-              {muscleGroup.value}
-            </option>
-          ))}
-        </select>
+          setState={setMuscleGroupSelection}
+          enum={muscleGroup}
+        />
         <p />
         <label>Equipment:</label>
         <br />

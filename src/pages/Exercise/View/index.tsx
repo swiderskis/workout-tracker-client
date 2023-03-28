@@ -8,6 +8,8 @@ import Loading from "../../Loading";
 import { ExerciseInformation } from "../../../interfaces/ExerciseInformation";
 
 import ExerciseListElement from "./ExerciseListElement";
+import TextInput from "../../../components/Form/TextInput";
+import SelectInput from "../../../components/Form/SelectInput";
 
 function ViewExercises() {
   const [isError, setIsError] = useState(false);
@@ -55,27 +57,20 @@ function ViewExercises() {
         <DisplayError text={errorText} />
       ) : (
         <>
-          <label htmlFor="exercise-search">Exercise name: </label>
-          <input
-            type="text"
-            id="exercise-search"
+          <TextInput
+            label="Exercise name"
             name="exercise-search"
-            onChange={(e) => setSearch(e.target.value)}
-          ></input>
+            setState={setSearch}
+            removeBreak={true}
+          />
           <p />
-          <label htmlFor="muscle-group"> Muscle group: </label>
-          <select
-            id="muscle-group"
+          <SelectInput
+            label="Muscle group"
             name="muscle-group"
-            onChange={(e) => setMuscleGroupSelection(Number(e.target.value))}
-          >
-            <option value={-1}></option>
-            {muscleGroup.map((muscleGroup) => (
-              <option key={muscleGroup.key} value={muscleGroup.key}>
-                {muscleGroup.value}
-              </option>
-            ))}
-          </select>
+            setState={setMuscleGroupSelection}
+            enum={muscleGroup}
+            removeBreak={true}
+          />
           <p />
           <table className="w3-table w3-striped w3-centered">
             <thead>
