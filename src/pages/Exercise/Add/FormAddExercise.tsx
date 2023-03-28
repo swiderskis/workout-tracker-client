@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import useErrorResponse from "../../../hooks/useErrorResponse";
 import TextInput from "../../../components/Form/TextInput";
 import SelectInput from "../../../components/Form/SelectInput";
+import MultiCheckboxInput from "../../../components/Form/MultiCheckboxInput";
 
 function FormAddExercise() {
   const [isError, setIsError] = useState(false);
@@ -15,7 +16,7 @@ function FormAddExercise() {
   const [exerciseName, setExerciseName] = useState("");
   const [muscleGroupSelection, setMuscleGroupSelection] = useState(-1);
   const [equipmentSelection, setEquipmentSelection] = useState<number[]>([]);
-  const [equipmentCheckbox, setEquipmentCheckbox] = useState(
+  const [equipmentCheckbox, setEquipmentCheckbox] = useState<boolean[]>(
     new Array(equipment.length).fill(false)
   );
   const navigate = useNavigate();
@@ -91,24 +92,12 @@ function FormAddExercise() {
           enum={muscleGroup}
         />
         <p />
-        <label>Equipment:</label>
-        <br />
-        <ul className="w3-ul" style={{ width: "30%" }}>
-          {equipment.map((equipment) => (
-            <li key={equipment.key}>
-              <input
-                type="checkbox"
-                id={equipment.value}
-                name={equipment.value}
-                value={equipment.key}
-                checked={equipmentCheckbox[equipment.key]}
-                onChange={() => handleCheckbox(equipment.key)}
-              />
-              <label htmlFor={equipment.value}> {equipment.value}</label>
-              <br />
-            </li>
-          ))}
-        </ul>
+        <MultiCheckboxInput
+          label="Equipment"
+          enum={equipment}
+          checked={equipmentCheckbox}
+          onChange={handleCheckbox}
+        />
         <ButtonPrimary value="Add exercise" />
       </form>
     </>

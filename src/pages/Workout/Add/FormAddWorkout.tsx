@@ -2,9 +2,11 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ButtonPrimary from "../../../components/Button/ButtonPrimary";
+import ButtonSpan from "../../../components/Button/ButtonSpan";
 import DisplayError from "../../../components/DisplayError";
 import SelectInput from "../../../components/Form/SelectInput";
 import TextInput from "../../../components/Form/TextInput";
+import IntegerSelectInput from "../../../components/IntegerSelectInput";
 import Modal from "../../../components/Modal";
 import day from "../../../enums/day";
 import equipment from "../../../enums/equipment";
@@ -12,7 +14,7 @@ import muscleGroup from "../../../enums/muscleGroup";
 import useErrorResponse from "../../../hooks/useErrorResponse";
 import useNameFromEnum from "../../../hooks/useNameFromEnum";
 import { WorkoutExerciseSelection } from "../../../interfaces/WorkoutExerciseInfo";
-import ExerciseListTable from "./ExerciseListTable";
+import ExerciseListTable from "./Modal/ExerciseListTable";
 
 function FormAddWorkout() {
   const [isError, setIsError] = useState(false);
@@ -84,6 +86,7 @@ function FormAddWorkout() {
       });
   };
 
+  // Pushes exercise into workoutExercises state
   const pushExercise = (
     exerciseId: number,
     exerciseName: string,
@@ -91,6 +94,7 @@ function FormAddWorkout() {
     exerciseEquipmentLinkId: number,
     equipmentId: number
   ) => {
+    // Check if equipment has been chosen
     if (exerciseEquipmentLinkId === -1 || equipmentId === -1) {
       return {
         success: false,
@@ -98,6 +102,7 @@ function FormAddWorkout() {
       };
     }
 
+    // Checks if equipment exercise combination has already been aadded to workout
     let exerciseAdded = false;
 
     workoutExercises.forEach((exercise) => {
@@ -198,22 +203,18 @@ function FormAddWorkout() {
                 <td>{useNameFromEnum(exercise.muscleGroupId, muscleGroup)}</td>
                 <td>{useNameFromEnum(exercise.equipmentId, equipment)}</td>
                 <td>
-                  <input
-                    size={1}
-                    style={{ textAlign: "center" }}
-                    onChange={(e) =>
-                      changeExerciseSets(index, Number(e.target.value))
-                    }
-                  ></input>
+                  <IntegerSelectInput
+                    index={index}
+                    maxValue={10}
+                    onChange={changeExerciseSets}
+                  />
                 </td>
                 <td>
-                  <input
-                    size={1}
-                    style={{ textAlign: "center" }}
-                    onChange={(e) =>
-                      changeExerciseReps(index, Number(e.target.value))
-                    }
-                  ></input>
+                  <IntegerSelectInput
+                    index={index}
+                    maxValue={30}
+                    onChange={changeExerciseReps}
+                  />
                 </td>
                 <td>
                   <span
@@ -237,12 +238,7 @@ function FormAddWorkout() {
               <td />
               <td />
               <td>
-                <span
-                  style={{ textDecoration: "underline", cursor: "pointer" }}
-                  onClick={() => setModalShown(true)}
-                >
-                  Add
-                </span>
+                <ButtonSpan value="Add" onClick={() => setModalShown(true)} />
               </td>
             </tr>
           </tbody>

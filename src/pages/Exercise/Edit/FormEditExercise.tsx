@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ButtonPrimary from "../../../components/Button/ButtonPrimary";
 import DisplayError from "../../../components/DisplayError";
+import MultiCheckboxInput from "../../../components/Form/MultiCheckboxInput";
 import SelectInput from "../../../components/Form/SelectInput";
 import TextInput from "../../../components/Form/TextInput";
 import equipment from "../../../enums/equipment";
@@ -68,7 +69,7 @@ function FormEditExercise(props: ExerciseInformation) {
     setEquipmentCheckbox(updateCheckbox);
 
     // Adds or removes selected equipment based on checkboxes
-    const selection = equipmentSelection;
+    const selection = equipmentSelection.slice(0);
 
     if (selection.indexOf(key) !== -1) {
       selection.splice(selection.indexOf(key), 1);
@@ -111,22 +112,12 @@ function FormEditExercise(props: ExerciseInformation) {
         <p />
         <label>Equipment:</label>
         <br />
-        <ul className="w3-ul" style={{ width: "30%" }}>
-          {equipment.map((equipment) => (
-            <li key={equipment.key}>
-              <input
-                type="checkbox"
-                id={equipment.value}
-                name={equipment.value}
-                value={equipment.key}
-                checked={equipmentCheckbox[equipment.key]}
-                onChange={() => handleCheckbox(equipment.key)}
-              />
-              <label htmlFor={equipment.value}> {equipment.value}</label>
-              <br />
-            </li>
-          ))}
-        </ul>
+        <MultiCheckboxInput
+          label="Equipment"
+          enum={equipment}
+          checked={equipmentCheckbox}
+          onChange={handleCheckbox}
+        />
         <ButtonPrimary value="Update exercise" />
       </form>
     </>

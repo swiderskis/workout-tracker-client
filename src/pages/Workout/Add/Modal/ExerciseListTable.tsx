@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import equipment from "../../../enums/equipment";
-import muscleGroup from "../../../enums/muscleGroup";
-import useErrorResponse from "../../../hooks/useErrorResponse";
-import useNameFromEnum from "../../../hooks/useNameFromEnum";
-import { WorkoutExerciseInfo } from "../../../interfaces/WorkoutExerciseInfo";
-import Loading from "../../Loading";
+import ButtonSpan from "../../../../components/Button/ButtonSpan";
+import equipment from "../../../../enums/equipment";
+import muscleGroup from "../../../../enums/muscleGroup";
+import useErrorResponse from "../../../../hooks/useErrorResponse";
+import useNameFromEnum from "../../../../hooks/useNameFromEnum";
+import { WorkoutExerciseInfo } from "../../../../interfaces/WorkoutExerciseInfo";
+import Loading from "../../../Loading";
+import EquipmentSelectInput from "./EquipmentSelectInput";
 
 interface ExerciseListTableProps {
   modalError: (error: boolean, errorText: string) => void;
@@ -44,6 +46,32 @@ function ExerciseListTable(props: ExerciseListTableProps) {
     setLoading(false);
   };
 
+  // Attempts to push exercise into pushExercise function, closes model if successful & displays error if not
+  const attemptPushExercise = (
+    exerciseId: number,
+    exerciseName: string,
+    muscleGroupId: number,
+    selectedLinkId: number,
+    selectedEquipmentId: number
+  ) => {
+    const pushExerciseRes = props.pushExercise(
+      exerciseId,
+      exerciseName,
+      muscleGroupId,
+      selectedLinkId,
+      selectedEquipmentId
+    );
+
+    if (!pushExerciseRes.success) {
+      props.modalError(true, pushExerciseRes.errorMessage);
+      return;
+    }
+
+    props.modalError(false, "");
+    props.hideModal();
+  };
+
+  // Updates selectedLinkIds and selectedEquipmentIds element when equipment is selected for an exercise
   const selectEquipment = (
     linkIds: number[],
     equipmentIds: number[],
@@ -71,6 +99,7 @@ function ExerciseListTable(props: ExerciseListTableProps) {
     loadModalInfo();
   }, []);
 
+  // Initialises selectedLinkIds and selectedEquipmentIds with -1 when exercise list is loaded
   useEffect(() => {
     const linkIds: number[] = [];
     const equipmentIds: number[] = [];
@@ -100,59 +129,26 @@ function ExerciseListTable(props: ExerciseListTableProps) {
             <td>{exerciseInfo.exerciseName}</td>
             <td>{useNameFromEnum(exerciseInfo.muscleGroupId, muscleGroup)}</td>
             <td>
-              <select
-                id="exercise-equipment"
-                name="exercise-equipment"
-                onChange={(e) => {
-                  selectEquipment(
-                    exerciseInfo.exerciseEquipmentLinkIds,
-                    exerciseInfo.equipmentIds,
-                    Number(e.target.value),
-                    index
-                  );
-                }}
-              >
-                <option key={-1} value={-1}></option>
-                {exerciseInfo.equipmentIds.map(
-                  (equipmentId, equipmentIndex) => (
-                    <option
-                      key={
-                        exerciseInfo.exerciseEquipmentLinkIds[equipmentIndex]
-                      }
-                      value={
-                        exerciseInfo.exerciseEquipmentLinkIds[equipmentIndex]
-                      }
-                    >
-                      {useNameFromEnum(equipmentId, equipment)}
-                    </option>
-                  )
-                )}
-              </select>
+              <EquipmentSelectInput
+                linkIds={exerciseInfo.exerciseEquipmentLinkIds}
+                equipmentIds={exerciseInfo.equipmentIds}
+                index={index}
+                selectEquipment={selectEquipment}
+              />
             </td>
             <td>
-              <span
-                style={{
-                  textDecoration: "underline",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  const pushExerciseRes = props.pushExercise(
+              <ButtonSpan
+                value="Select"
+                onClick={() =>
+                  attemptPushExercise(
                     exerciseInfo.exerciseId,
                     exerciseInfo.exerciseName,
                     exerciseInfo.muscleGroupId,
                     selectedLinkIds[index],
                     selectedEquipmentIds[index]
-                  );
-                  if (pushExerciseRes.success) {
-                    props.modalError(false, "");
-                    props.hideModal();
-                  } else {
-                    props.modalError(true, pushExerciseRes.errorMessage);
-                  }
-                }}
-              >
-                Select
-              </span>
+                  )
+                }
+              />
             </td>
           </tr>
         ))}

@@ -20,7 +20,7 @@ function SelectInput(props: SelectInputProps) {
         onChange={(e) => props.setState(Number(e.target.value))}
         defaultValue={props.defaultValue}
       >
-        <option key={-1} value={-1}></option>
+        <option key={-1} value={-1} />
         {props.enum.map((element) => (
           <option key={element.key} value={element.key}>
             {element.value}
