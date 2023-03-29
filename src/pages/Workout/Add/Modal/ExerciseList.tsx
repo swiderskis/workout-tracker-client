@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import SelectInput from "../../../../components/Form/SelectInput";
 import TextInput from "../../../../components/Form/TextInput";
 import muscleGroup from "../../../../enums/muscleGroup";
@@ -101,8 +101,8 @@ function ExerciseList(props: ExerciseListProps) {
           </tr>
         </thead>
         <tbody>
-          {exerciseInfo.map((exerciseInfo, index) => (
-            <tr key={exerciseInfo.exerciseId}>
+          {exerciseInfo.map((exerciseInfo) => (
+            <Fragment key={exerciseInfo.exerciseId}>
               {exerciseInfo.exerciseName
                 .toLowerCase()
                 .includes(search.toLowerCase()) &&
@@ -113,7 +113,7 @@ function ExerciseList(props: ExerciseListProps) {
                   attemptPushExercise={attemptPushExercise}
                 />
               ) : null}
-            </tr>
+            </Fragment>
           ))}
         </tbody>
       </table>

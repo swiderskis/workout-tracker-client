@@ -32,7 +32,7 @@ function ExerciseListRow(props: ExerciseListRowProps) {
   };
 
   return (
-    <>
+    <tr>
       <td>{props.exerciseInfo.exerciseName}</td>
       <td>{useNameFromEnum(props.exerciseInfo.muscleGroupId, muscleGroup)}</td>
       <td>
@@ -56,7 +56,7 @@ function ExerciseListRow(props: ExerciseListRowProps) {
           }
         />
       </td>
-    </>
+    </tr>
   );
 }
 

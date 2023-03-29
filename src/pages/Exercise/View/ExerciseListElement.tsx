@@ -5,7 +5,7 @@ import useNameFromEnum from "../../../hooks/useNameFromEnum";
 
 function ExerciseListElement(exerciseInfo: ExerciseListInfo) {
   return (
-    <>
+    <tr>
       <td>{exerciseInfo.exerciseName}</td>
       <td>{useNameFromEnum(exerciseInfo.muscleGroupId, muscleGroup)}</td>
       <td>
@@ -17,7 +17,7 @@ function ExerciseListElement(exerciseInfo: ExerciseListInfo) {
           Delete
         </Link>
       </td>
-    </>
+    </tr>
   );
 }
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DisplayError from "../../../components/DisplayError";
 import muscleGroup from "../../../enums/muscleGroup";
@@ -82,7 +82,7 @@ function ViewExercises() {
             </thead>
             <tbody>
               {exerciseInfo.map((exercise) => (
-                <tr key={exercise.exerciseId}>
+                <Fragment key={exercise.exerciseId}>
                   {exercise.exerciseName
                     .toLowerCase()
                     .includes(search.toLowerCase()) &&
@@ -90,7 +90,7 @@ function ViewExercises() {
                     muscleGroupSearch === exercise.muscleGroupId) ? (
                     <ExerciseListElement {...exercise} />
                   ) : null}
-                </tr>
+                </Fragment>
               ))}
             </tbody>
           </table>
