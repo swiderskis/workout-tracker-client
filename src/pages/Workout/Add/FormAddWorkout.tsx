@@ -14,7 +14,7 @@ import muscleGroup from "../../../enums/muscleGroup";
 import useErrorResponse from "../../../hooks/useErrorResponse";
 import useNameFromEnum from "../../../hooks/useNameFromEnum";
 import { WorkoutExerciseSelection } from "../../../interfaces/WorkoutExerciseInfo";
-import ExerciseListTable from "./Modal/ExerciseListTable";
+import ExerciseList from "./Modal/ExerciseList";
 
 function FormAddWorkout() {
   const [isError, setIsError] = useState(false);
@@ -94,7 +94,7 @@ function FormAddWorkout() {
     exerciseEquipmentLinkId: number,
     equipmentId: number
   ) => {
-    // Check if equipment has been chosen
+    // Checks if equipment has been chosen
     if (exerciseEquipmentLinkId === -1 || equipmentId === -1) {
       return {
         success: false,
@@ -102,7 +102,7 @@ function FormAddWorkout() {
       };
     }
 
-    // Checks if equipment exercise combination has already been aadded to workout
+    // Checks if equipment exercise combination has already been added to workout
     let exerciseAdded = false;
 
     workoutExercises.forEach((exercise) => {
@@ -118,6 +118,7 @@ function FormAddWorkout() {
           "This exercise & equipment combination is already in your workout",
       };
 
+    // Pushes exercise info
     const currentWorkoutExercises = workoutExercises.slice(0);
     const sets = -1;
     const reps = -1;
@@ -217,17 +218,10 @@ function FormAddWorkout() {
                   />
                 </td>
                 <td>
-                  <span
-                    style={{
-                      textDecoration: "underline",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      removeExercise(index);
-                    }}
-                  >
-                    Remove
-                  </span>
+                  <ButtonSpan
+                    value="Remove"
+                    onClick={() => removeExercise(index)}
+                  />
                 </td>
               </tr>
             ))}
@@ -247,7 +241,7 @@ function FormAddWorkout() {
       </form>
       <Modal modalShown={modalShown} hideModal={hideModal}>
         {modalIsError ? <DisplayError text={modalErrorText} /> : <></>}
-        <ExerciseListTable
+        <ExerciseList
           modalError={modalError}
           hideModal={hideModal}
           pushExercise={pushExercise}

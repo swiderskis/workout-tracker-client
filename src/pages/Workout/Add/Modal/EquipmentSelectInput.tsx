@@ -4,12 +4,10 @@ import equipment from "../../../../enums/equipment";
 interface EquipmentSelectInputProps {
   linkIds: number[];
   equipmentIds: number[];
-  index: number;
   selectEquipment: (
     linkIds: number[],
     equipmentIds: number[],
-    selectedLink: number,
-    index: number
+    selectedLink: number
   ) => void;
 }
 
@@ -22,8 +20,7 @@ function EquipmentSelectInput(props: EquipmentSelectInputProps) {
         props.selectEquipment(
           props.linkIds,
           props.equipmentIds,
-          Number(e.target.value),
-          props.index
+          Number(e.target.value)
         );
       }}
     >

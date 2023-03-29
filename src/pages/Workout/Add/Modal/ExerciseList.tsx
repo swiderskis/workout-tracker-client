@@ -1,0 +1,96 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import useErrorResponse from "../../../../hooks/useErrorResponse";
+import { WorkoutExerciseInfo } from "../../../../interfaces/WorkoutExerciseInfo";
+import Loading from "../../../Loading";
+import ExerciseListRow from "./ExerciseListRow";
+
+interface ExerciseListProps {
+  modalError: (error: boolean, errorText: string) => void;
+  hideModal: () => void;
+  pushExercise: (
+    exerciseId: number,
+    exerciseName: string,
+    muscleGroupId: number,
+    exerciseEquipmentLinkId: number,
+    equipmentId: number
+  ) => { success: boolean; errorMessage: string };
+}
+
+function ExerciseList(props: ExerciseListProps) {
+  const [loading, setLoading] = useState(true);
+  const [exerciseInfo, setExerciseInfo] = useState<WorkoutExerciseInfo[]>([]);
+
+  const loadModalInfo = async () => {
+    await axios
+      .get(`/workout/exercise-list`, {
+        headers: {
+          token: localStorage.token,
+        },
+      })
+      .then((res) => {
+        setExerciseInfo(res.data);
+      })
+      .catch((err) => {
+        props.modalError(true, useErrorResponse(err));
+      });
+
+    setLoading(false);
+  };
+
+  // Attempts to push exercise into pushExercise function, closes model if successful & displays error if not
+  const attemptPushExercise = (
+    exerciseId: number,
+    exerciseName: string,
+    muscleGroupId: number,
+    selectedLinkId: number,
+    selectedEquipmentId: number
+  ) => {
+    const pushExerciseRes = props.pushExercise(
+      exerciseId,
+      exerciseName,
+      muscleGroupId,
+      selectedLinkId,
+      selectedEquipmentId
+    );
+
+    if (!pushExerciseRes.success) {
+      props.modalError(true, pushExerciseRes.errorMessage);
+      return;
+    }
+
+    props.modalError(false, "");
+    props.hideModal();
+  };
+
+  useEffect(() => {
+    loadModalInfo();
+  }, []);
+
+  if (loading) return <Loading />;
+
+  return (
+    <table className="w3-table w3-striped w3-centered" id="modal-exercises">
+      <thead>
+        <tr className="w3-light-grey">
+          <td>Exercise name</td>
+          <td>Muscle group</td>
+          <td>Equipment</td>
+          <td>Action</td>
+        </tr>
+      </thead>
+      <tbody>
+        {exerciseInfo.map((exerciseInfo, index) => (
+          <tr key={exerciseInfo.exerciseId}>
+            <ExerciseListRow
+              exerciseInfo={exerciseInfo}
+              attemptPushExercise={attemptPushExercise}
+            />
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+export default ExerciseList;
