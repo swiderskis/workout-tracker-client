@@ -1,5 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import SelectInput from "../../../../components/Form/SelectInput";
+import TextInput from "../../../../components/Form/TextInput";
+import muscleGroup from "../../../../enums/muscleGroup";
 import useErrorResponse from "../../../../hooks/useErrorResponse";
 import { WorkoutExerciseInfo } from "../../../../interfaces/WorkoutExerciseInfo";
 import Loading from "../../../Loading";
@@ -20,6 +23,8 @@ interface ExerciseListProps {
 function ExerciseList(props: ExerciseListProps) {
   const [loading, setLoading] = useState(true);
   const [exerciseInfo, setExerciseInfo] = useState<WorkoutExerciseInfo[]>([]);
+  const [search, setSearch] = useState("");
+  const [muscleGroupSearch, setMuscleGroupSearch] = useState(-1);
 
   const loadModalInfo = async () => {
     await axios
@@ -70,26 +75,49 @@ function ExerciseList(props: ExerciseListProps) {
   if (loading) return <Loading />;
 
   return (
-    <table className="w3-table w3-striped w3-centered" id="modal-exercises">
-      <thead>
-        <tr className="w3-light-grey">
-          <td>Exercise name</td>
-          <td>Muscle group</td>
-          <td>Equipment</td>
-          <td>Action</td>
-        </tr>
-      </thead>
-      <tbody>
-        {exerciseInfo.map((exerciseInfo, index) => (
-          <tr key={exerciseInfo.exerciseId}>
-            <ExerciseListRow
-              exerciseInfo={exerciseInfo}
-              attemptPushExercise={attemptPushExercise}
-            />
+    <>
+      <TextInput
+        label="Exercise name"
+        name="exercise-search"
+        setState={setSearch}
+        removeBreak={true}
+      />
+      <p />
+      <SelectInput
+        label="Muscle group"
+        name="muscle-group"
+        setState={setMuscleGroupSearch}
+        enum={muscleGroup}
+        removeBreak={true}
+      />
+      <p />
+      <table className="w3-table w3-striped w3-centered" id="modal-exercises">
+        <thead>
+          <tr className="w3-light-grey">
+            <td>Exercise name</td>
+            <td>Muscle group</td>
+            <td>Equipment</td>
+            <td>Action</td>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {exerciseInfo.map((exerciseInfo, index) => (
+            <tr key={exerciseInfo.exerciseId}>
+              {exerciseInfo.exerciseName
+                .toLowerCase()
+                .includes(search.toLowerCase()) &&
+              (muscleGroupSearch === -1 ||
+                muscleGroupSearch === exerciseInfo.muscleGroupId) ? (
+                <ExerciseListRow
+                  exerciseInfo={exerciseInfo}
+                  attemptPushExercise={attemptPushExercise}
+                />
+              ) : null}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 }
 

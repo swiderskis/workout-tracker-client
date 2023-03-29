@@ -17,7 +17,7 @@ function ViewExercises() {
   const [loading, setLoading] = useState(true);
   const [exerciseInfo, setExerciseInfo] = useState<ExerciseInformation[]>([]);
   const [search, setSearch] = useState("");
-  const [muscleGroupSelection, setMuscleGroupSelection] = useState(-1);
+  const [muscleGroupSearch, setMuscleGroupSearch] = useState(-1);
 
   const loadExercises = async () => {
     await axios
@@ -67,7 +67,7 @@ function ViewExercises() {
           <SelectInput
             label="Muscle group"
             name="muscle-group"
-            setState={setMuscleGroupSelection}
+            setState={setMuscleGroupSearch}
             enum={muscleGroup}
             removeBreak={true}
           />
@@ -86,8 +86,8 @@ function ViewExercises() {
                   {exercise.exerciseName
                     .toLowerCase()
                     .includes(search.toLowerCase()) &&
-                  (muscleGroupSelection === -1 ||
-                    muscleGroupSelection === exercise.muscleGroupId) ? (
+                  (muscleGroupSearch === -1 ||
+                    muscleGroupSearch === exercise.muscleGroupId) ? (
                     <ExerciseListElement {...exercise} />
                   ) : null}
                 </tr>
