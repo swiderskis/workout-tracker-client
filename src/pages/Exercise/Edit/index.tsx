@@ -37,12 +37,12 @@ function EditExercise() {
   };
 
   const handleSubmit = async (
-    exerciseId: number,
     exerciseName: string,
     muscleGroupSelection: number,
     equipmentSelection: number[],
     setIsError: (value: React.SetStateAction<boolean>) => void,
-    setErrorText: (value: React.SetStateAction<string>) => void
+    setErrorText: (value: React.SetStateAction<string>) => void,
+    exerciseId: number
   ) => {
     if (muscleGroupSelection === -1) {
       setIsError(true);
@@ -90,7 +90,7 @@ function EditExercise() {
       <h3>Editing exercise: {exerciseInfo?.exerciseName}</h3>
       <FormAddEditExercise
         submitButtonValue="Update exercise"
-        submitActionWithId={handleSubmit}
+        submitAction={handleSubmit}
         exerciseInfo={exerciseInfo as ExerciseInformation}
       />
       <ButtonSecondary value="Back" onClick={backClick} />

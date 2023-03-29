@@ -10,20 +10,13 @@ import { ExerciseInformation } from "../../../interfaces/ExerciseInformation";
 
 interface FormAddEditExerciseProps {
   submitButtonValue: string;
-  submitAction?: (
+  submitAction: (
     exerciseName: string,
     muscleGroupSelection: number,
     equipmentSelection: number[],
     setIsError: (value: React.SetStateAction<boolean>) => void,
-    setErrorText: (value: React.SetStateAction<string>) => void
-  ) => Promise<void>;
-  submitActionWithId?: (
-    exerciseId: number,
-    exerciseName: string,
-    muscleGroupSelection: number,
-    equipmentSelection: number[],
-    setIsError: (value: React.SetStateAction<boolean>) => void,
-    setErrorText: (value: React.SetStateAction<string>) => void
+    setErrorText: (value: React.SetStateAction<string>) => void,
+    exerciseId: number
   ) => Promise<void>;
   exerciseInfo?: ExerciseInformation;
 }
@@ -32,13 +25,13 @@ function FormAddEditExercise(props: FormAddEditExerciseProps) {
   const [isError, setIsError] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [exerciseName, setExerciseName] = useState(
-    props.exerciseInfo?.exerciseName || ""
+    props.exerciseInfo ? props.exerciseInfo.exerciseName : ""
   );
   const [muscleGroupSelection, setMuscleGroupSelection] = useState(
-    props.exerciseInfo?.muscleGroupId || -1
+    props.exerciseInfo ? props.exerciseInfo.muscleGroupId : -1
   );
   const [equipmentSelection, setEquipmentSelection] = useState<number[]>(
-    props.exerciseInfo?.equipmentIds || []
+    props.exerciseInfo ? props.exerciseInfo.equipmentIds : []
   );
   const [equipmentCheckbox, setEquipmentCheckbox] = useState<boolean[]>(
     new Array(equipment.length).fill(false)
@@ -55,26 +48,14 @@ function FormAddEditExercise(props: FormAddEditExerciseProps) {
       return;
     }
 
-    if (props.submitAction) {
-      props.submitAction(
-        exerciseName,
-        muscleGroupSelection,
-        equipmentSelection,
-        setIsError,
-        setErrorText
-      );
-    }
-
-    if (props.submitActionWithId) {
-      props.submitActionWithId(
-        (props.exerciseInfo as ExerciseInformation).exerciseId,
-        exerciseName,
-        muscleGroupSelection,
-        equipmentSelection,
-        setIsError,
-        setErrorText
-      );
-    }
+    props.submitAction(
+      exerciseName,
+      muscleGroupSelection,
+      equipmentSelection,
+      setIsError,
+      setErrorText,
+      props.exerciseInfo ? props.exerciseInfo.exerciseId : -1
+    );
   };
 
   // Handles updating state when checkbox is ticked / unticked
