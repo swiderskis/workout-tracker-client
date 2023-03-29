@@ -1,30 +1,48 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import ButtonPrimary from "../../../components/Button/ButtonPrimary";
+import React, { useEffect, useState } from "react";
 import DisplayError from "../../../components/DisplayError";
-import MultiCheckboxInput from "../../../components/Form/MultiCheckboxInput";
-import SelectInput from "../../../components/Form/SelectInput";
-import TextInput from "../../../components/Form/TextInput";
-import equipment from "../../../enums/equipment";
 import muscleGroup from "../../../enums/muscleGroup";
-import useErrorResponse from "../../../hooks/useErrorResponse";
+import equipment from "../../../enums/equipment";
+import ButtonPrimary from "../../../components/Button/ButtonPrimary";
+import TextInput from "../../../components/Form/TextInput";
+import SelectInput from "../../../components/Form/SelectInput";
+import MultiCheckboxInput from "../../../components/Form/MultiCheckboxInput";
 import { ExerciseInformation } from "../../../interfaces/ExerciseInformation";
 
-function FormEditExercise(props: ExerciseInformation) {
+interface FormAddEditExerciseProps {
+  submitButtonValue: string;
+  submitAction?: (
+    exerciseName: string,
+    muscleGroupSelection: number,
+    equipmentSelection: number[],
+    setIsError: (value: React.SetStateAction<boolean>) => void,
+    setErrorText: (value: React.SetStateAction<string>) => void
+  ) => Promise<void>;
+  submitActionWithId?: (
+    exerciseId: number,
+    exerciseName: string,
+    muscleGroupSelection: number,
+    equipmentSelection: number[],
+    setIsError: (value: React.SetStateAction<boolean>) => void,
+    setErrorText: (value: React.SetStateAction<string>) => void
+  ) => Promise<void>;
+  exerciseInfo?: ExerciseInformation;
+}
+
+function FormAddEditExercise(props: FormAddEditExerciseProps) {
   const [isError, setIsError] = useState(false);
   const [errorText, setErrorText] = useState("");
-  const [exerciseName, setExerciseName] = useState(props.exerciseName);
+  const [exerciseName, setExerciseName] = useState(
+    props.exerciseInfo?.exerciseName || ""
+  );
   const [muscleGroupSelection, setMuscleGroupSelection] = useState(
-    props.muscleGroupId
+    props.exerciseInfo?.muscleGroupId || -1
   );
   const [equipmentSelection, setEquipmentSelection] = useState<number[]>(
-    props.equipmentIds
+    props.exerciseInfo?.equipmentIds || []
   );
-  const [equipmentCheckbox, setEquipmentCheckbox] = useState(
+  const [equipmentCheckbox, setEquipmentCheckbox] = useState<boolean[]>(
     new Array(equipment.length).fill(false)
   );
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,29 +55,29 @@ function FormEditExercise(props: ExerciseInformation) {
       return;
     }
 
-    await axios
-      .put(
-        `/exercise/update/` + props.exerciseId,
-        {
-          exerciseName,
-          muscleGroupSelection,
-          equipmentSelection,
-        },
-        {
-          headers: {
-            token: localStorage.token,
-          },
-        }
-      )
-      .then((res) => {
-        navigate("/exercise/view");
-      })
-      .catch((err) => {
-        setIsError(true);
-        setErrorText(useErrorResponse(err));
-      });
+    if (props.submitAction) {
+      props.submitAction(
+        exerciseName,
+        muscleGroupSelection,
+        equipmentSelection,
+        setIsError,
+        setErrorText
+      );
+    }
+
+    if (props.submitActionWithId) {
+      props.submitActionWithId(
+        (props.exerciseInfo as ExerciseInformation).exerciseId,
+        exerciseName,
+        muscleGroupSelection,
+        equipmentSelection,
+        setIsError,
+        setErrorText
+      );
+    }
   };
 
+  // Handles updating state when checkbox is ticked / unticked
   const handleCheckbox = (key: number) => {
     // Toggles if checkbox should be checked or unchecked
     const updateCheckbox = equipmentCheckbox.map((item, index) =>
@@ -69,7 +87,7 @@ function FormEditExercise(props: ExerciseInformation) {
     setEquipmentCheckbox(updateCheckbox);
 
     // Adds or removes selected equipment based on checkboxes
-    const selection = equipmentSelection.slice(0);
+    const selection = equipmentSelection;
 
     if (selection.indexOf(key) !== -1) {
       selection.splice(selection.indexOf(key), 1);
@@ -89,7 +107,7 @@ function FormEditExercise(props: ExerciseInformation) {
     });
   };
 
-  useEffect(() => setCheckboxes(), []);
+  useEffect(() => setCheckboxes(), [equipmentSelection]);
 
   return (
     <>
@@ -98,7 +116,7 @@ function FormEditExercise(props: ExerciseInformation) {
         <TextInput
           label="Exercise name"
           name="exercise-name"
-          defaultValue={props.exerciseName}
+          defaultValue={exerciseName}
           setState={setExerciseName}
         />
         <p />
@@ -107,21 +125,19 @@ function FormEditExercise(props: ExerciseInformation) {
           name="muscle-group"
           setState={setMuscleGroupSelection}
           enum={muscleGroup}
-          defaultValue={props.muscleGroupId}
+          defaultValue={muscleGroupSelection}
         />
         <p />
-        <label>Equipment:</label>
-        <br />
         <MultiCheckboxInput
           label="Equipment"
           enum={equipment}
           checked={equipmentCheckbox}
           onChange={handleCheckbox}
         />
-        <ButtonPrimary value="Update exercise" />
+        <ButtonPrimary value={props.submitButtonValue} />
       </form>
     </>
   );
 }
 
-export default FormEditExercise;
+export default FormAddEditExercise;

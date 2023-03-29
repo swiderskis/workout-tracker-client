@@ -6,7 +6,7 @@ import DisplayError from "../../../components/DisplayError";
 import useErrorResponse from "../../../hooks/useErrorResponse";
 import Loading from "../../Loading";
 import { ExerciseInformation } from "../../../interfaces/ExerciseInformation";
-import FormEditExercise from "./FormEditExercise";
+import FormAddEditExercise from "../components/FormAddEditExercise";
 
 function EditExercise() {
   const [isError, setIsError] = useState(false);
@@ -36,6 +36,43 @@ function EditExercise() {
     setLoading(false);
   };
 
+  const handleSubmit = async (
+    exerciseId: number,
+    exerciseName: string,
+    muscleGroupSelection: number,
+    equipmentSelection: number[],
+    setIsError: (value: React.SetStateAction<boolean>) => void,
+    setErrorText: (value: React.SetStateAction<string>) => void
+  ) => {
+    if (muscleGroupSelection === -1) {
+      setIsError(true);
+      setErrorText("Please fill in all fields");
+      return;
+    }
+
+    await axios
+      .put(
+        `/exercise/update/` + exerciseId,
+        {
+          exerciseName,
+          muscleGroupSelection,
+          equipmentSelection,
+        },
+        {
+          headers: {
+            token: localStorage.token,
+          },
+        }
+      )
+      .then((res) => {
+        navigate("/exercise/view");
+      })
+      .catch((err) => {
+        setIsError(true);
+        setErrorText(useErrorResponse(err));
+      });
+  };
+
   const backClick = () => {
     navigate("/exercise/view");
   };
@@ -51,8 +88,11 @@ function EditExercise() {
   return (
     <>
       <h3>Editing exercise: {exerciseInfo?.exerciseName}</h3>
-
-      <FormEditExercise {...(exerciseInfo as ExerciseInformation)} />
+      <FormAddEditExercise
+        submitButtonValue="Update exercise"
+        submitActionWithId={handleSubmit}
+        exerciseInfo={exerciseInfo as ExerciseInformation}
+      />
       <ButtonSecondary value="Back" onClick={backClick} />
     </>
   );
