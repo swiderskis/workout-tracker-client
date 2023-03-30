@@ -1,9 +1,10 @@
 import { useState } from "react";
 import ButtonSpan from "../../../../components/Button/ButtonSpan";
+import SelectInput from "../../../../components/Form/SelectInput";
+import equipment from "../../../../enums/equipment";
 import muscleGroup from "../../../../enums/muscleGroup";
 import useNameFromEnum from "../../../../hooks/useNameFromEnum";
 import { WorkoutExerciseInfo } from "../../../../interfaces/WorkoutExerciseInfo";
-import EquipmentSelectInput from "./EquipmentSelectInput";
 
 interface ExerciseListRowProps {
   exerciseInfo: WorkoutExerciseInfo;
@@ -18,17 +19,16 @@ interface ExerciseListRowProps {
 
 function ExerciseListRow(props: ExerciseListRowProps) {
   const [linkIdSelection, setLinkIdSelection] = useState(-1);
-  const [exerciseIdSelection, setExerciseIdSelection] = useState(-1);
+  const [equipmentIdSelection, setEquipmentIdSelection] = useState(-1);
 
-  const selectEquipment = (
-    linkIds: number[],
-    equipmentIds: number[],
-    selectedLink: number
-  ) => {
-    const selectedEquipment = equipmentIds[linkIds.indexOf(selectedLink)];
+  const selectEquipment = (selectedEquipment: number) => {
+    const equipmentIds = props.exerciseInfo.equipmentIds;
+    const linkIds = props.exerciseInfo.exerciseEquipmentLinkIds;
+
+    const selectedLink = linkIds[equipmentIds.indexOf(selectedEquipment)];
 
     setLinkIdSelection(selectedLink);
-    setExerciseIdSelection(selectedEquipment);
+    setEquipmentIdSelection(selectedEquipment);
   };
 
   return (
@@ -36,10 +36,14 @@ function ExerciseListRow(props: ExerciseListRowProps) {
       <td>{props.exerciseInfo.exerciseName}</td>
       <td>{useNameFromEnum(props.exerciseInfo.muscleGroupId, muscleGroup)}</td>
       <td>
-        <EquipmentSelectInput
-          linkIds={props.exerciseInfo.exerciseEquipmentLinkIds}
-          equipmentIds={props.exerciseInfo.equipmentIds}
-          selectEquipment={selectEquipment}
+        <SelectInput
+          label=""
+          name="exercise-equipment"
+          onChange={selectEquipment}
+          enum={equipment}
+          value={equipmentIdSelection}
+          enumFilter={props.exerciseInfo.equipmentIds}
+          removeLabel={true}
         />
       </td>
       <td>
@@ -51,7 +55,7 @@ function ExerciseListRow(props: ExerciseListRowProps) {
               props.exerciseInfo.exerciseName,
               props.exerciseInfo.muscleGroupId,
               linkIdSelection,
-              exerciseIdSelection
+              equipmentIdSelection
             )
           }
         />
