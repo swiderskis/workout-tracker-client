@@ -1,5 +1,5 @@
 import ButtonSpan from "../../../components/Button/ButtonSpan";
-import IntegerSelectInput from "../../../components/IntegerSelectInput";
+import IntegerSelectInput from "../../../components/Form/IntegerSelectInput";
 import equipment from "../../../enums/equipment";
 import muscleGroup from "../../../enums/muscleGroup";
 import useNameFromEnum from "../../../hooks/useNameFromEnum";
