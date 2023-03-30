@@ -1,11 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 function ExerciseHome() {
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+  return <Outlet />;
 }
 
 export default ExerciseHome;

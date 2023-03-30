@@ -13,12 +13,12 @@ function FormLogin() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  // Submits login details to be checked against database values
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setIsError(false);
 
-    // API call to compare login details
     await axios
       .post(`/login`, { username, password })
       .then((res) => {

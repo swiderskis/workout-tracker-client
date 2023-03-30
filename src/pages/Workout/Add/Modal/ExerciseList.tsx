@@ -26,6 +26,7 @@ function ExerciseList(props: ExerciseListProps) {
   const [search, setSearch] = useState("");
   const [muscleGroupSearch, setMuscleGroupSearch] = useState(-1);
 
+  // Loads exercise details to be inserted into modal
   const loadModalInfo = async () => {
     await axios
       .get(`/workout/exercise-list`, {

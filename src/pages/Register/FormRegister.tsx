@@ -14,6 +14,7 @@ function FormRegister() {
   const [errorText, setErrorText] = useState("");
   const navigate = useNavigate();
 
+  // Submits user details to be added to database
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -25,10 +26,9 @@ function FormRegister() {
       return;
     }
 
-    // API call to register new user
     await axios
       .post(`/register`, { username, password })
-      .then((res) => {
+      .then((_res) => {
         navigate("/login");
       })
       .catch((err) => {

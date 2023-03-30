@@ -11,7 +11,7 @@ import day from "../../../enums/day";
 import useErrorResponse from "../../../hooks/useErrorResponse";
 import { WorkoutExerciseSelection } from "../../../interfaces/WorkoutExerciseInfo";
 import ExerciseList from "./Modal/ExerciseList";
-import WorkoutExercisesRow from "./WorkoutExercisesRow";
+import WorkoutExerciseRow from "./WorkoutExercisesRow";
 
 function FormAddWorkout() {
   const [isError, setIsError] = useState(false);
@@ -26,6 +26,7 @@ function FormAddWorkout() {
   const [modalErrorText, setModalErrorText] = useState("");
   const navigate = useNavigate();
 
+  // Submits workout details to database
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -74,7 +75,7 @@ function FormAddWorkout() {
           },
         }
       )
-      .then((res) => {
+      .then((_res) => {
         navigate("/");
       })
       .catch((err) => {
@@ -135,6 +136,7 @@ function FormAddWorkout() {
     return { success: true, errorMessage: "" };
   };
 
+  // Handles changing sets & reps when dropdown values are changed
   const changeSetsReps = (exercise: WorkoutExerciseSelection) => {
     const currentWorkoutExercises = workoutExercises.slice(0);
 
@@ -197,7 +199,7 @@ function FormAddWorkout() {
           <tbody>
             {workoutExercises.map((exercise, index) => (
               <Fragment key={exercise.exerciseEquipmentLinkId}>
-                <WorkoutExercisesRow
+                <WorkoutExerciseRow
                   exercise={exercise}
                   index={index}
                   removeExercise={removeExercise}

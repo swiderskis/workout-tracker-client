@@ -6,6 +6,7 @@ interface IntegerSelectInputProps {
   onChange: (value: number) => void;
 }
 
+// Creates array from 1 to maxValue
 function IntegerSelectInput(props: IntegerSelectInputProps) {
   const [numberArray, setNumberArray] = useState<number[]>([]);
 

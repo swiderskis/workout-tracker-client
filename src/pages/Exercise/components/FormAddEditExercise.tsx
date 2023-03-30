@@ -37,11 +37,13 @@ function FormAddEditExercise(props: FormAddEditExerciseProps) {
     new Array(equipment.length).fill(false)
   );
 
+  // Submits new / updated exercise info
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setIsError(false);
 
+    // Throws error if no muscle group selected
     if (muscleGroupSelection === -1) {
       setIsError(true);
       setErrorText("Please fill in all fields");

@@ -11,6 +11,7 @@ function DeleteExercise() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
+  // Deletes exercise info from database
   const deleteExercise = async () => {
     if (!searchParams.get("exercise-id")) navigate("/exercise/view");
 
@@ -20,7 +21,7 @@ function DeleteExercise() {
           token: localStorage.token,
         },
       })
-      .then((res) => {
+      .then((_res) => {
         navigate("/exercise/view");
       })
       .catch((err) => {

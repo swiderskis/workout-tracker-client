@@ -7,6 +7,7 @@ import FormAddEditExercise from "../components/FormAddEditExercise";
 function AddExercise() {
   const navigate = useNavigate();
 
+  // Submits new exercise details to database
   const handleSubmit = async (
     exerciseName: string,
     muscleGroupSelection: number,
@@ -28,7 +29,7 @@ function AddExercise() {
           },
         }
       )
-      .then((res) => {
+      .then((_res) => {
         navigate("/exercise/view");
       })
       .catch((err) => {

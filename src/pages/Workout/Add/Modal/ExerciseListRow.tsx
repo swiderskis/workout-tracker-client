@@ -21,6 +21,7 @@ function ExerciseListRow(props: ExerciseListRowProps) {
   const [linkIdSelection, setLinkIdSelection] = useState(-1);
   const [equipmentIdSelection, setEquipmentIdSelection] = useState(-1);
 
+  // Sets selected equipment & link ids in when dropdown is changed
   const selectEquipment = (selectedEquipment: number) => {
     const equipmentIds = props.exerciseInfo.equipmentIds;
     const linkIds = props.exerciseInfo.exerciseEquipmentLinkIds;

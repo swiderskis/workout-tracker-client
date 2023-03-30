@@ -12,6 +12,7 @@ interface SelectInputProps {
   removeLabel?: boolean;
 }
 
+// Filters enum if only certain enum values are wanted
 function SelectInput(props: SelectInputProps) {
   const [filteredEnum, setFilteredEnum] = useState<EnumObject[]>([]);
 

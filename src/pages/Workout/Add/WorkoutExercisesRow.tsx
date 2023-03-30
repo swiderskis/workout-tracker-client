@@ -12,7 +12,7 @@ interface WorkoutExerciseRowProps {
   changeSetsReps: (exercise: WorkoutExerciseSelection) => void;
 }
 
-function WorkoutExercisesRow(props: WorkoutExerciseRowProps) {
+function WorkoutExerciseRow(props: WorkoutExerciseRowProps) {
   const changeSets = (sets: number) => {
     const currWorkoutExercise = props.exercise;
 
@@ -58,4 +58,4 @@ function WorkoutExercisesRow(props: WorkoutExerciseRowProps) {
   );
 }
 
-export default WorkoutExercisesRow;
+export default WorkoutExerciseRow;

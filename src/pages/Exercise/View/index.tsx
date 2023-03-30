@@ -18,6 +18,7 @@ function ViewExercises() {
   const [search, setSearch] = useState("");
   const [muscleGroupSearch, setMuscleGroupSearch] = useState(-1);
 
+  // Loads exercise information from database
   const loadExercises = async () => {
     await axios
       .get(`/exercise/view`, {

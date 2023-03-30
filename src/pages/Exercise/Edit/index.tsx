@@ -16,6 +16,7 @@ function EditExercise() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
+  // Loads exercise info from database
   const loadExerciseInfo = async () => {
     if (!searchParams.get("exercise-id")) navigate("/exercise/view");
 
@@ -36,6 +37,7 @@ function EditExercise() {
     setLoading(false);
   };
 
+  // Submits updated exercise details to database
   const handleSubmit = async (
     exerciseName: string,
     muscleGroupSelection: number,
@@ -64,7 +66,7 @@ function EditExercise() {
           },
         }
       )
-      .then((res) => {
+      .then((_res) => {
         navigate("/exercise/view");
       })
       .catch((err) => {
