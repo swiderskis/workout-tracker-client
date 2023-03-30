@@ -25,6 +25,7 @@ function ExerciseList(props: ExerciseListProps) {
   const [exerciseInfo, setExerciseInfo] = useState<WorkoutExerciseInfo[]>([]);
   const [search, setSearch] = useState("");
   const [muscleGroupSearch, setMuscleGroupSearch] = useState(-1);
+  const [listLoaded, setListLoaded] = useState(true);
 
   // Loads exercise details to be inserted into modal
   const loadModalInfo = async () => {
@@ -65,9 +66,18 @@ function ExerciseList(props: ExerciseListProps) {
       return;
     }
 
+    reloadList();
+
     props.modalError(false, "");
     props.hideModal();
   };
+
+  // Resets dropdowns when an exercise is selected from list, by unloading and reloading map of components
+  const reloadList = () => {
+    setListLoaded(false);
+  };
+
+  useEffect(() => setListLoaded(true), [listLoaded]);
 
   useEffect(() => {
     loadModalInfo();
@@ -110,7 +120,8 @@ function ExerciseList(props: ExerciseListProps) {
                 .toLowerCase()
                 .includes(search.toLowerCase()) &&
               (muscleGroupSearch === -1 ||
-                muscleGroupSearch === exerciseInfo.muscleGroupId) ? (
+                muscleGroupSearch === exerciseInfo.muscleGroupId) &&
+              listLoaded ? (
                 <ExerciseListRow
                   exerciseInfo={exerciseInfo}
                   attemptPushExercise={attemptPushExercise}
