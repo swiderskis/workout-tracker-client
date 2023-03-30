@@ -48,6 +48,7 @@ function ExerciseListRow(props: ExerciseListRowProps) {
           value={equipmentIdSelection}
           enumFilter={props.exerciseInfo.equipmentIds}
           removeLabel={true}
+          overrideWidth={100}
         />
       </td>
       <td>

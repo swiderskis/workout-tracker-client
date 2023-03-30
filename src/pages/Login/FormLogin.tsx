@@ -41,7 +41,7 @@ function FormLogin() {
           value={username}
           onChange={setUsername}
         />
-        <br />
+        <p />
         <TextInput
           label="Password"
           name="password"
@@ -49,7 +49,7 @@ function FormLogin() {
           onChange={setPassword}
           password={true}
         />
-        <br />
+        <p />
         <ButtonPrimary value="Log in" />
       </form>
     </>

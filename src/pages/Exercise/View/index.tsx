@@ -62,7 +62,6 @@ function ViewExercises() {
             name="exercise-search"
             value={search}
             onChange={setSearch}
-            removeBreak={true}
           />
           <p />
           <SelectInput
@@ -71,7 +70,6 @@ function ViewExercises() {
             value={muscleGroupSearch}
             onChange={setMuscleGroupSearch}
             enum={muscleGroup}
-            removeBreak={true}
           />
           <p />
           <table className="w3-table w3-striped w3-centered">

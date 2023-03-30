@@ -25,6 +25,8 @@ function IntegerSelectInput(props: IntegerSelectInputProps) {
     <select
       value={props.value}
       onChange={(e) => props.onChange(Number(e.target.value))}
+      className="w3-select w3-border"
+      style={{ width: 50 }}
     >
       <option key={-1} value={-1} />
       {numberArray.map((element) => (

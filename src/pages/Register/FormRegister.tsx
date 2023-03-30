@@ -51,7 +51,7 @@ function FormRegister() {
           value={username}
           onChange={setUsername}
         />
-        <br />
+        <p />
         <TextInput
           label="Password"
           name="password"
@@ -59,7 +59,7 @@ function FormRegister() {
           onChange={setPassword}
           password={true}
         />
-        <br />
+        <p />
         <TextInput
           label="Confirm Password"
           name="confirm-password"
@@ -67,7 +67,7 @@ function FormRegister() {
           onChange={setConfirmPassword}
           password={true}
         />
-        <br />
+        <p />
         <ButtonPrimary value="Register" />{" "}
       </form>
     </>

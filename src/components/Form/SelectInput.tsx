@@ -8,8 +8,8 @@ interface SelectInputProps {
   enum: EnumObject[];
   value: number;
   enumFilter?: number[];
-  removeBreak?: boolean;
   removeLabel?: boolean;
+  overrideWidth?: number;
 }
 
 // Filters enum if only certain enum values are wanted
@@ -38,14 +38,20 @@ function SelectInput(props: SelectInputProps) {
   return (
     <>
       {props.removeLabel ? null : (
-        <label htmlFor={props.name}>{props.label}: </label>
+        <>
+          <label htmlFor={props.name}>{props.label}: </label>
+          <br />
+        </>
       )}
-      {props.removeBreak || props.removeLabel ? null : <br />}
       <select
         id={props.name}
         name={props.name}
         value={props.value}
         onChange={(e) => props.onChange(Number(e.target.value))}
+        className="w3-select w3-border"
+        style={
+          props.overrideWidth ? { width: props.overrideWidth } : { width: 300 }
+        }
       >
         <option key={-1} value={-1} />
         {filteredEnum.map((element) => (

@@ -12,7 +12,7 @@ function MultiCheckboxInput(props: MultiCheckboxInputProps) {
     <>
       <label>{props.label}:</label>
       <br />
-      <ul className="w3-ul" style={{ width: "30%" }}>
+      <ul className="w3-ul" style={{ width: 300 }}>
         {props.enum.map((element) => (
           <li key={element.key}>
             <input
@@ -22,6 +22,7 @@ function MultiCheckboxInput(props: MultiCheckboxInputProps) {
               value={element.key}
               checked={props.checked[element.key]}
               onChange={() => props.onChange(element.key)}
+              className="w3-check"
             />
             <label htmlFor={element.value}> {element.value}</label>
             <br />
