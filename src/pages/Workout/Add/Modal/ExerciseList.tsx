@@ -96,16 +96,14 @@ function ExerciseList(props: ExerciseListProps) {
         removeBreak={true}
       />
       <p />
-      <div>
-        <SelectInput
-          label="Muscle group"
-          name="muscle-group"
-          value={muscleGroupSearch}
-          onChange={setMuscleGroupSearch}
-          enum={muscleGroup}
-          removeBreak={true}
-        />
-      </div>
+      <SelectInput
+        label="Muscle group"
+        name="muscle-group"
+        value={muscleGroupSearch}
+        onChange={setMuscleGroupSearch}
+        enum={muscleGroup}
+        removeBreak={true}
+      />
       <p />
       <table className="w3-table w3-striped w3-centered" id="modal-exercises">
         <thead>
