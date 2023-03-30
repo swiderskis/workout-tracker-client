@@ -45,19 +45,26 @@ function FormRegister() {
     <>
       {isError ? <DisplayError text={errorText} /> : null}
       <form onSubmit={handleSubmit}>
-        <TextInput label="Username" name="username" setState={setUsername} />
+        <TextInput
+          label="Username"
+          name="username"
+          value={username}
+          onChange={setUsername}
+        />
         <br />
         <TextInput
           label="Password"
           name="password"
-          setState={setPassword}
+          value={password}
+          onChange={setPassword}
           password={true}
         />
         <br />
         <TextInput
           label="Confirm Password"
           name="confirm-password"
-          setState={setConfirmPassword}
+          value={confirmPassword}
+          onChange={setConfirmPassword}
           password={true}
         />
         <br />

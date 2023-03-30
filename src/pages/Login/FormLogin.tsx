@@ -35,12 +35,18 @@ function FormLogin() {
     <>
       {isError ? <DisplayError text={errorText} /> : null}
       <form onSubmit={handleSubmit}>
-        <TextInput label="Username" name="username" setState={setUsername} />
+        <TextInput
+          label="Username"
+          name="username"
+          value={username}
+          onChange={setUsername}
+        />
         <br />
         <TextInput
           label="Password"
           name="password"
-          setState={setPassword}
+          value={password}
+          onChange={setPassword}
           password={true}
         />
         <br />

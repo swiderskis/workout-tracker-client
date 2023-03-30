@@ -6,7 +6,6 @@ import muscleGroup from "../../../enums/muscleGroup";
 import useErrorResponse from "../../../hooks/useErrorResponse";
 import Loading from "../../Loading";
 import { ExerciseInformation } from "../../../interfaces/ExerciseInformation";
-
 import ExerciseListElement from "./ExerciseListElement";
 import TextInput from "../../../components/Form/TextInput";
 import SelectInput from "../../../components/Form/SelectInput";
@@ -60,14 +59,16 @@ function ViewExercises() {
           <TextInput
             label="Exercise name"
             name="exercise-search"
-            setState={setSearch}
+            value={search}
+            onChange={setSearch}
             removeBreak={true}
           />
           <p />
           <SelectInput
             label="Muscle group"
             name="muscle-group"
-            setState={setMuscleGroupSearch}
+            value={muscleGroupSearch}
+            onChange={setMuscleGroupSearch}
             enum={muscleGroup}
             removeBreak={true}
           />

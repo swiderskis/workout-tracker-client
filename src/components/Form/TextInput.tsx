@@ -1,8 +1,8 @@
 interface TextInputProps {
   label: string;
   name: string;
-  setState: React.Dispatch<React.SetStateAction<string>>;
-  defaultValue?: string;
+  onChange: (value: string) => void;
+  value: string;
   removeBreak?: boolean;
   password?: boolean;
 }
@@ -16,8 +16,8 @@ function TextInput(props: TextInputProps) {
         type={props.password ? "password" : "text"}
         id={props.name}
         name={props.name}
-        defaultValue={props.defaultValue}
-        onChange={(e) => props.setState(e.target.value)}
+        value={props.value}
+        onChange={(e) => props.onChange(e.target.value)}
       />
     </>
   );

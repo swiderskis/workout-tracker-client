@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 interface IntegerSelectInputProps {
-  index: number;
+  value: number;
   maxValue: number;
-  onChange: (index: number, value: number) => void;
+  onChange: (value: number) => void;
 }
 
 function IntegerSelectInput(props: IntegerSelectInputProps) {
@@ -22,7 +22,8 @@ function IntegerSelectInput(props: IntegerSelectInputProps) {
 
   return (
     <select
-      onChange={(e) => props.onChange(props.index, Number(e.target.value))}
+      value={props.value}
+      onChange={(e) => props.onChange(Number(e.target.value))}
     >
       <option key={-1} value={-1} />
       {numberArray.map((element) => (

@@ -97,16 +97,16 @@ function FormAddEditExercise(props: FormAddEditExerciseProps) {
         <TextInput
           label="Exercise name"
           name="exercise-name"
-          defaultValue={exerciseName}
-          setState={setExerciseName}
+          value={exerciseName}
+          onChange={setExerciseName}
         />
         <p />
         <SelectInput
           label="Muscle group"
           name="muscle-group"
-          setState={setMuscleGroupSelection}
+          value={muscleGroupSelection}
+          onChange={setMuscleGroupSelection}
           enum={muscleGroup}
-          defaultValue={muscleGroupSelection}
         />
         <p />
         <MultiCheckboxInput

@@ -1,20 +1,17 @@
 import axios from "axios";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ButtonPrimary from "../../../components/Button/ButtonPrimary";
 import ButtonSpan from "../../../components/Button/ButtonSpan";
 import DisplayError from "../../../components/DisplayError";
 import SelectInput from "../../../components/Form/SelectInput";
 import TextInput from "../../../components/Form/TextInput";
-import IntegerSelectInput from "../../../components/IntegerSelectInput";
 import Modal from "../../../components/Modal";
 import day from "../../../enums/day";
-import equipment from "../../../enums/equipment";
-import muscleGroup from "../../../enums/muscleGroup";
 import useErrorResponse from "../../../hooks/useErrorResponse";
-import useNameFromEnum from "../../../hooks/useNameFromEnum";
 import { WorkoutExerciseSelection } from "../../../interfaces/WorkoutExerciseInfo";
 import ExerciseList from "./Modal/ExerciseList";
+import WorkoutExercisesRow from "./WorkoutExercisesRow";
 
 function FormAddWorkout() {
   const [isError, setIsError] = useState(false);
@@ -138,24 +135,22 @@ function FormAddWorkout() {
     return { success: true, errorMessage: "" };
   };
 
+  const changeSetsReps = (exercise: WorkoutExerciseSelection) => {
+    const currentWorkoutExercises = workoutExercises.slice(0);
+
+    currentWorkoutExercises.forEach((element, index) => {
+      element.exerciseEquipmentLinkId === exercise.exerciseEquipmentLinkId
+        ? (currentWorkoutExercises[index] = exercise)
+        : null;
+    });
+
+    setWorkoutExercises(currentWorkoutExercises);
+  };
+
   const removeExercise = (index: number) => {
     const currentWorkoutExercises = workoutExercises.slice(0);
 
     currentWorkoutExercises.splice(index, 1);
-    setWorkoutExercises(currentWorkoutExercises);
-  };
-
-  const changeExerciseSets = (index: number, sets: number) => {
-    const currentWorkoutExercises = workoutExercises.slice(0);
-
-    currentWorkoutExercises[index].sets = sets;
-    setWorkoutExercises(currentWorkoutExercises);
-  };
-
-  const changeExerciseReps = (index: number, reps: number) => {
-    const currentWorkoutExercises = workoutExercises.slice(0);
-
-    currentWorkoutExercises[index].reps = reps;
     setWorkoutExercises(currentWorkoutExercises);
   };
 
@@ -175,13 +170,15 @@ function FormAddWorkout() {
         <TextInput
           label="Workout name"
           name="workout-name"
-          setState={setWorkoutName}
+          value={workoutName}
+          onChange={setWorkoutName}
         />
         <p />
         <SelectInput
           label="Day"
           name="workout-day"
-          setState={setWorkoutDay}
+          value={workoutDay}
+          onChange={setWorkoutDay}
           enum={day}
         />
         <p />
@@ -199,31 +196,14 @@ function FormAddWorkout() {
           </thead>
           <tbody>
             {workoutExercises.map((exercise, index) => (
-              <tr key={exercise.exerciseEquipmentLinkId}>
-                <td>{exercise.exerciseName}</td>
-                <td>{useNameFromEnum(exercise.muscleGroupId, muscleGroup)}</td>
-                <td>{useNameFromEnum(exercise.equipmentId, equipment)}</td>
-                <td>
-                  <IntegerSelectInput
-                    index={index}
-                    maxValue={10}
-                    onChange={changeExerciseSets}
-                  />
-                </td>
-                <td>
-                  <IntegerSelectInput
-                    index={index}
-                    maxValue={30}
-                    onChange={changeExerciseReps}
-                  />
-                </td>
-                <td>
-                  <ButtonSpan
-                    value="Remove"
-                    onClick={() => removeExercise(index)}
-                  />
-                </td>
-              </tr>
+              <Fragment key={exercise.exerciseEquipmentLinkId}>
+                <WorkoutExercisesRow
+                  exercise={exercise}
+                  index={index}
+                  removeExercise={removeExercise}
+                  changeSetsReps={changeSetsReps}
+                />
+              </Fragment>
             ))}
             <tr key={-1}>
               <td />

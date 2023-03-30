@@ -3,9 +3,9 @@ import { EnumObject } from "../../interfaces/EnumObject";
 interface SelectInputProps {
   label: string;
   name: string;
-  setState: React.Dispatch<React.SetStateAction<number>>;
+  onChange: (value: number) => void;
   enum: EnumObject[];
-  defaultValue?: number;
+  value: number;
   removeBreak?: boolean;
 }
 
@@ -17,8 +17,8 @@ function SelectInput(props: SelectInputProps) {
       <select
         id={props.name}
         name={props.name}
-        onChange={(e) => props.setState(Number(e.target.value))}
-        defaultValue={props.defaultValue}
+        value={props.value}
+        onChange={(e) => props.onChange(Number(e.target.value))}
       >
         <option key={-1} value={-1} />
         {props.enum.map((element) => (

@@ -79,14 +79,16 @@ function ExerciseList(props: ExerciseListProps) {
       <TextInput
         label="Exercise name"
         name="exercise-search"
-        setState={setSearch}
+        value={search}
+        onChange={setSearch}
         removeBreak={true}
       />
       <p />
       <SelectInput
         label="Muscle group"
         name="muscle-group"
-        setState={setMuscleGroupSearch}
+        value={muscleGroupSearch}
+        onChange={setMuscleGroupSearch}
         enum={muscleGroup}
         removeBreak={true}
       />
