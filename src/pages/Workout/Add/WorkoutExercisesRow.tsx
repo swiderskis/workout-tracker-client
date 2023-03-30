@@ -4,6 +4,7 @@ import equipment from "../../../enums/equipment";
 import muscleGroup from "../../../enums/muscleGroup";
 import useNameFromEnum from "../../../hooks/useNameFromEnum";
 import { WorkoutExerciseSelection } from "../../../interfaces/WorkoutExerciseInfo";
+import "./style.css";
 
 interface WorkoutExerciseRowProps {
   exercise: WorkoutExerciseSelection;
@@ -31,9 +32,12 @@ function WorkoutExerciseRow(props: WorkoutExerciseRowProps) {
 
   return (
     <tr>
-      <td>{props.exercise.exerciseName}</td>
-      <td>{useNameFromEnum(props.exercise.muscleGroupId, muscleGroup)}</td>
-      <td>{useNameFromEnum(props.exercise.equipmentId, equipment)}</td>
+      <td>{`${useNameFromEnum(props.exercise.equipmentId, equipment)} ${
+        props.exercise.exerciseName
+      }`}</td>
+      <td className="hidden-column">
+        {useNameFromEnum(props.exercise.muscleGroupId, muscleGroup)}
+      </td>
       <td>
         <IntegerSelectInput
           value={props.exercise.sets}

@@ -7,6 +7,7 @@ import useErrorResponse from "../../../../hooks/useErrorResponse";
 import { WorkoutExerciseInfo } from "../../../../interfaces/WorkoutExerciseInfo";
 import Loading from "../../../Loading";
 import ExerciseListRow from "./ExerciseListRow";
+import "../style.css";
 
 interface ExerciseListProps {
   modalError: (error: boolean, errorText: string) => void;
@@ -95,20 +96,22 @@ function ExerciseList(props: ExerciseListProps) {
         removeBreak={true}
       />
       <p />
-      <SelectInput
-        label="Muscle group"
-        name="muscle-group"
-        value={muscleGroupSearch}
-        onChange={setMuscleGroupSearch}
-        enum={muscleGroup}
-        removeBreak={true}
-      />
+      <div>
+        <SelectInput
+          label="Muscle group"
+          name="muscle-group"
+          value={muscleGroupSearch}
+          onChange={setMuscleGroupSearch}
+          enum={muscleGroup}
+          removeBreak={true}
+        />
+      </div>
       <p />
       <table className="w3-table w3-striped w3-centered" id="modal-exercises">
         <thead>
           <tr className="w3-light-grey">
             <td>Exercise name</td>
-            <td>Muscle group</td>
+            <td className="hidden-column">Muscle group</td>
             <td>Equipment</td>
             <td>Action</td>
           </tr>

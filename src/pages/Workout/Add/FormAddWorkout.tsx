@@ -12,6 +12,7 @@ import useErrorResponse from "../../../hooks/useErrorResponse";
 import { WorkoutExerciseSelection } from "../../../interfaces/WorkoutExerciseInfo";
 import ExerciseList from "./Modal/ExerciseList";
 import WorkoutExerciseRow from "./WorkoutExercisesRow";
+import "./style.css";
 
 function FormAddWorkout() {
   const [isError, setIsError] = useState(false);
@@ -189,8 +190,7 @@ function FormAddWorkout() {
           <thead>
             <tr className="w3-light-grey">
               <td>Exercise name</td>
-              <td>Muscle group</td>
-              <td>Equipment</td>
+              <td className="hidden-column">Muscle group</td>
               <td>Sets</td>
               <td>Reps</td>
               <td>Action</td>
@@ -209,8 +209,7 @@ function FormAddWorkout() {
             ))}
             <tr key={-1}>
               <td />
-              <td />
-              <td />
+              <td className="hidden-column" />
               <td />
               <td />
               <td>

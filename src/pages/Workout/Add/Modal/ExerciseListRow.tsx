@@ -5,6 +5,7 @@ import equipment from "../../../../enums/equipment";
 import muscleGroup from "../../../../enums/muscleGroup";
 import useNameFromEnum from "../../../../hooks/useNameFromEnum";
 import { WorkoutExerciseInfo } from "../../../../interfaces/WorkoutExerciseInfo";
+import "../style.css";
 
 interface ExerciseListRowProps {
   exerciseInfo: WorkoutExerciseInfo;
@@ -35,7 +36,9 @@ function ExerciseListRow(props: ExerciseListRowProps) {
   return (
     <tr>
       <td>{props.exerciseInfo.exerciseName}</td>
-      <td>{useNameFromEnum(props.exerciseInfo.muscleGroupId, muscleGroup)}</td>
+      <td className="hidden-column">
+        {useNameFromEnum(props.exerciseInfo.muscleGroupId, muscleGroup)}
+      </td>
       <td>
         <SelectInput
           label=""

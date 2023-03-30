@@ -12,13 +12,15 @@ function Modal(props: ModalProps) {
     >
       <div className="w3-modal-content">
         <div className="w3-container">
-          <span
-            className="w3-button w3-display-topright w3-hover-none"
-            onClick={() => props.hideModal()}
-          >
-            &times;
-          </span>
-          <div className="w3-container w3-margin">{props.children}</div>
+          <div className="w3-container w3-margin">
+            <span
+              className="w3-button w3-display-topright w3-hover-none"
+              onClick={() => props.hideModal()}
+            >
+              &times;
+            </span>
+          </div>
+          <div className="w3-margin-top w3-margin-bottom">{props.children}</div>
         </div>
       </div>
     </div>
