@@ -64,8 +64,6 @@ function EditRoutine() {
     getRoutine();
   }, []);
 
-  useEffect(() => console.log(routine), [routine]);
-
   if (loading) return <Loading />;
 
   if (isError) return <DisplayError text={errorText} />;
