@@ -57,7 +57,7 @@ function App() {
                 </PrivateRoute>
               }
             >
-              <Route path="add" element={<AddWorkout />} />
+              <Route path="create-routine" element={<AddWorkout />} />
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />

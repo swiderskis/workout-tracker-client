@@ -15,3 +15,15 @@ export interface WorkoutExerciseSelection extends WorkoutExerciseBase {
   exerciseEquipmentLinkId: number;
   equipmentId: number;
 }
+
+export interface WorkoutRoutineDay {
+  day: number;
+  workoutName: string;
+  workoutExercises: WorkoutExerciseSelection[];
+}
+
+export interface WorkoutRoutine {
+  startDate: Date;
+  endDate: Date;
+  workoutRoutineDays: WorkoutRoutineDay[];
+}

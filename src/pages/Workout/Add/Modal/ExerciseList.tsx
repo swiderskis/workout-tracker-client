@@ -4,10 +4,11 @@ import SelectInput from "../../../../components/Form/SelectInput";
 import TextInput from "../../../../components/Form/TextInput";
 import muscleGroup from "../../../../enums/muscleGroup";
 import useErrorResponse from "../../../../hooks/useErrorResponse";
-import { WorkoutExerciseInfo } from "../../../../interfaces/WorkoutExerciseInfo";
+import { WorkoutExerciseInfo } from "../../../../interfaces/WorkoutInformation";
 import Loading from "../../../Loading";
 import ExerciseListRow from "./ExerciseListRow";
-import "../style.css";
+import "../../style.css";
+import { Link } from "react-router-dom";
 
 interface ExerciseListProps {
   modalError: (error: boolean, errorText: string) => void;
@@ -86,6 +87,14 @@ function ExerciseList(props: ExerciseListProps) {
 
   if (loading) return <Loading />;
 
+  if (exerciseInfo.length === 0)
+    return (
+      <p>
+        No exercises added, click <Link to="/exercise/add">here</Link> to add
+        one now!
+      </p>
+    );
+
   return (
     <>
       <TextInput
@@ -107,7 +116,7 @@ function ExerciseList(props: ExerciseListProps) {
         <thead>
           <tr className="w3-light-grey">
             <td>Exercise name</td>
-            <td className="hidden-column">Muscle group</td>
+            <td className="mobile-hide-column">Muscle group</td>
             <td>Equipment</td>
             <td>Action</td>
           </tr>

@@ -1,31 +1,38 @@
-import axios from "axios";
 import { Fragment, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import ButtonPrimary from "../../../components/Button/ButtonPrimary";
 import ButtonSpan from "../../../components/Button/ButtonSpan";
 import DisplayError from "../../../components/DisplayError";
-import SelectInput from "../../../components/Form/SelectInput";
 import TextInput from "../../../components/Form/TextInput";
 import Modal from "../../../components/Modal";
 import day from "../../../enums/day";
-import useErrorResponse from "../../../hooks/useErrorResponse";
-import { WorkoutExerciseSelection } from "../../../interfaces/WorkoutExerciseInfo";
-import ExerciseList from "./Modal/ExerciseList";
-import WorkoutExerciseRow from "./WorkoutExercisesRow";
-import "./style.css";
+import {
+  WorkoutExerciseSelection,
+  WorkoutRoutineDay,
+} from "../../../interfaces/WorkoutInformation";
+import ExerciseList from "../Add/Modal/ExerciseList";
+import WorkoutExerciseRow from "../Add/WorkoutExercisesRow";
+import "../style.css";
+import useNameFromEnum from "../../../hooks/useNameFromEnum";
+import ButtonSecondary from "../../../components/Button/ButtonSecondary";
 
-function FormAddWorkout() {
+interface FormAddEditWorkoutProps {
+  workoutRoutineDay: WorkoutRoutineDay;
+  updateRoutineDay: (updatedRoutineDay: WorkoutRoutineDay) => void;
+  backClick: () => void;
+}
+
+function FormAddEditWorkout(props: FormAddEditWorkoutProps) {
   const [isError, setIsError] = useState(false);
   const [errorText, setErrorText] = useState("");
-  const [workoutName, setWorkoutName] = useState("");
-  const [workoutDay, setWorkoutDay] = useState(-1);
+  const [workoutName, setWorkoutName] = useState(
+    props.workoutRoutineDay.workoutName
+  );
   const [workoutExercises, setWorkoutExercises] = useState<
     WorkoutExerciseSelection[]
-  >([]);
+  >(props.workoutRoutineDay.workoutExercises);
   const [modalShown, setModalShown] = useState(false);
   const [modalIsError, setModalIsError] = useState(false);
   const [modalErrorText, setModalErrorText] = useState("");
-  const navigate = useNavigate();
 
   // Submits workout details to database
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -35,13 +42,6 @@ function FormAddWorkout() {
     if (workoutExercises.length === 0) {
       setIsError(true);
       setErrorText("Please select at least one exercise for this workout");
-      return;
-    }
-
-    // Check a valid day has been selected
-    if (workoutDay < 0) {
-      setIsError(true);
-      setErrorText("Please input a valid day for the workout");
       return;
     }
 
@@ -60,29 +60,17 @@ function FormAddWorkout() {
       return;
     }
 
+    const updatedRoutineDay: WorkoutRoutineDay = {
+      day: props.workoutRoutineDay.day,
+      workoutName: workoutName,
+      workoutExercises: workoutExercises,
+    };
+
+    props.updateRoutineDay(updatedRoutineDay);
+
     setIsError(false);
 
-    await axios
-      .post(
-        "/workout/add",
-        {
-          workoutName,
-          workoutDay,
-          workoutExercises,
-        },
-        {
-          headers: {
-            token: localStorage.token,
-          },
-        }
-      )
-      .then((_res) => {
-        navigate("/");
-      })
-      .catch((err) => {
-        setIsError(true);
-        setErrorText(useErrorResponse(err));
-      });
+    props.backClick();
   };
 
   // Pushes exercise into workoutExercises state
@@ -169,6 +157,9 @@ function FormAddWorkout() {
   return (
     <>
       {isError ? <DisplayError text={errorText} /> : null}
+      <h3>
+        Editing {useNameFromEnum(props.workoutRoutineDay.day, day)}'s workout
+      </h3>
       <form onSubmit={handleSubmit}>
         <TextInput
           label="Workout name"
@@ -177,20 +168,12 @@ function FormAddWorkout() {
           onChange={setWorkoutName}
         />
         <p />
-        <SelectInput
-          label="Day"
-          name="workout-day"
-          value={workoutDay}
-          onChange={setWorkoutDay}
-          enum={day}
-        />
-        <p />
         <label htmlFor="exercises">Exercises:</label>
         <table className="w3-table w3-striped w3-centered" id="exercises">
           <thead>
             <tr className="w3-light-grey">
               <td>Exercise name</td>
-              <td className="hidden-column">Muscle group</td>
+              <td className="mobile-hide-column">Muscle group</td>
               <td>Sets</td>
               <td>Reps</td>
               <td>Action</td>
@@ -209,7 +192,7 @@ function FormAddWorkout() {
             ))}
             <tr key={-1}>
               <td />
-              <td className="hidden-column" />
+              <td className="mobile-hide-column" />
               <td />
               <td />
               <td>
@@ -218,8 +201,13 @@ function FormAddWorkout() {
             </tr>
           </tbody>
         </table>
-        <ButtonPrimary value="Submit" />
+        <ButtonPrimary value="Submit" className="w3-margin-top" />
       </form>
+      <ButtonSecondary
+        value="Back"
+        className="w3-margin-top"
+        onClick={props.backClick}
+      />
       <Modal modalShown={modalShown} hideModal={hideModal}>
         {modalIsError ? <DisplayError text={modalErrorText} /> : <></>}
         <ExerciseList
@@ -232,4 +220,4 @@ function FormAddWorkout() {
   );
 }
 
-export default FormAddWorkout;
+export default FormAddEditWorkout;

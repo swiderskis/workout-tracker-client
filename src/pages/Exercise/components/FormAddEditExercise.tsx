@@ -117,7 +117,10 @@ function FormAddEditExercise(props: FormAddEditExerciseProps) {
           checked={equipmentCheckbox}
           onChange={handleCheckbox}
         />
-        <ButtonPrimary value={props.submitButtonValue} />
+        <ButtonPrimary
+          value={props.submitButtonValue}
+          className="w3-margin-top"
+        />
       </form>
     </>
   );

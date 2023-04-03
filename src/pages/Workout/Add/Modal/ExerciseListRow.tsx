@@ -4,8 +4,8 @@ import SelectInput from "../../../../components/Form/SelectInput";
 import equipment from "../../../../enums/equipment";
 import muscleGroup from "../../../../enums/muscleGroup";
 import useNameFromEnum from "../../../../hooks/useNameFromEnum";
-import { WorkoutExerciseInfo } from "../../../../interfaces/WorkoutExerciseInfo";
-import "../style.css";
+import { WorkoutExerciseInfo } from "../../../../interfaces/WorkoutInformation";
+import "../../style.css";
 
 interface ExerciseListRowProps {
   exerciseInfo: WorkoutExerciseInfo;
@@ -36,7 +36,7 @@ function ExerciseListRow(props: ExerciseListRowProps) {
   return (
     <tr>
       <td>{props.exerciseInfo.exerciseName}</td>
-      <td className="hidden-column">
+      <td className="mobile-hide-column">
         {useNameFromEnum(props.exerciseInfo.muscleGroupId, muscleGroup)}
       </td>
       <td>

@@ -3,8 +3,8 @@ import IntegerSelectInput from "../../../components/Form/IntegerSelectInput";
 import equipment from "../../../enums/equipment";
 import muscleGroup from "../../../enums/muscleGroup";
 import useNameFromEnum from "../../../hooks/useNameFromEnum";
-import { WorkoutExerciseSelection } from "../../../interfaces/WorkoutExerciseInfo";
-import "./style.css";
+import { WorkoutExerciseSelection } from "../../../interfaces/WorkoutInformation";
+import "../style.css";
 
 interface WorkoutExerciseRowProps {
   exercise: WorkoutExerciseSelection;
@@ -35,7 +35,7 @@ function WorkoutExerciseRow(props: WorkoutExerciseRowProps) {
       <td>{`${useNameFromEnum(props.exercise.equipmentId, equipment)} ${
         props.exercise.exerciseName
       }`}</td>
-      <td className="hidden-column">
+      <td className="mobile-hide-column">
         {useNameFromEnum(props.exercise.muscleGroupId, muscleGroup)}
       </td>
       <td>

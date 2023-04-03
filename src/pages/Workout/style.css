@@ -1,5 +1,5 @@
 @media all and (max-width: 600px) {
-  .w3-table .hidden-column {
+  .w3-table .mobile-hide-column {
     display: none;
   }
 }

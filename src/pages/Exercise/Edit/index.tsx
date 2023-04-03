@@ -95,7 +95,11 @@ function EditExercise() {
         submitAction={handleSubmit}
         exerciseInfo={exerciseInfo as ExerciseInformation}
       />
-      <ButtonSecondary value="Back" onClick={backClick} />
+      <ButtonSecondary
+        value="Back"
+        onClick={backClick}
+        className="w3-margin-top"
+      />
     </>
   );
 }

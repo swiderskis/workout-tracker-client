@@ -48,7 +48,11 @@ function AddExercise() {
         submitButtonValue="Add exercise"
         submitAction={handleSubmit}
       />
-      <ButtonSecondary value="Back" onClick={backClick} />
+      <ButtonSecondary
+        value="Back"
+        onClick={backClick}
+        className="w3-margin-top"
+      />
     </>
   );
 }
