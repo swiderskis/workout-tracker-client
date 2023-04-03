@@ -16,7 +16,23 @@ function EditRoutine() {
   const navigate = useNavigate();
 
   // Sends updated routine info to database
-  const submitAction = async () => {};
+  const submitAction = async (
+    routine: WorkoutRoutine,
+    setIsError: (value: React.SetStateAction<boolean>) => void,
+    setErrorText: (value: React.SetStateAction<string>) => void
+  ) => {
+    await axios
+      .put(`/workout/routine/${searchParams.get("routine-id")}`, routine, {
+        headers: {
+          token: localStorage.token,
+        },
+      })
+      .then((res) => {})
+      .catch((err) => {
+        setIsError(true);
+        setErrorText(useErrorResponse(err));
+      });
+  };
 
   // Loads current routine data from database
   const getRoutine = async () => {
