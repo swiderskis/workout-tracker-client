@@ -13,7 +13,9 @@ import ViewExercises from "./pages/Exercise/View";
 import EditExercise from "./pages/Exercise/Edit";
 import DeleteExercise from "./pages/Exercise/Delete";
 import WorkoutHome from "./pages/Workout/Home";
-import AddWorkout from "./pages/Workout/Add";
+import AddRoutine from "./pages/Workout/Add";
+import ViewRoutines from "./pages/Workout/View";
+import EditRoutine from "./pages/Workout/Edit";
 
 axios.defaults.baseURL = `http://localhost:5000`;
 
@@ -57,7 +59,9 @@ function App() {
                 </PrivateRoute>
               }
             >
-              <Route path="create-routine" element={<AddWorkout />} />
+              <Route path="create-routine" element={<AddRoutine />} />
+              <Route path="routine-list" element={<ViewRoutines />} />
+              <Route path="routine" element={<EditRoutine />} />
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />

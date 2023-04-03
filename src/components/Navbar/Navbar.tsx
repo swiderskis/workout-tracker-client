@@ -24,8 +24,9 @@ function Navbar() {
         <NavItem path="/exercise/add" value="Add exercise" />
         <NavItem path="/exercise/view" value="View exercises" />
       </NavDropdown>
-      <NavDropdown name="Workout">
+      <NavDropdown name="Routine">
         <NavItem path="/workout/create-routine" value="Create new routine" />
+        <NavItem path="/workout/routine-list" value="View routine(s)" />
       </NavDropdown>
       <button
         className="w3-button w3-ripple"

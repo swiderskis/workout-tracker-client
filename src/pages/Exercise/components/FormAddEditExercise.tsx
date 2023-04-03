@@ -50,7 +50,7 @@ function FormAddEditExercise(props: FormAddEditExerciseProps) {
       return;
     }
 
-    props.submitAction(
+    await props.submitAction(
       exerciseName,
       muscleGroupSelection,
       equipmentSelection,

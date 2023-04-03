@@ -9,11 +9,11 @@ function ExerciseListElement(exerciseInfo: ExerciseListInfo) {
       <td>{exerciseInfo.exerciseName}</td>
       <td>{useNameFromEnum(exerciseInfo.muscleGroupId, muscleGroup)}</td>
       <td>
-        <Link to={"/exercise/edit?exercise-id=" + exerciseInfo.exerciseId}>
+        <Link to={`/exercise/edit?exercise-id=${exerciseInfo.exerciseId}`}>
           Edit
         </Link>
         <br />
-        <Link to={"/exercise/delete?exercise-id=" + exerciseInfo.exerciseId}>
+        <Link to={`/exercise/delete?exercise-id=${exerciseInfo.exerciseId}`}>
           Delete
         </Link>
       </td>

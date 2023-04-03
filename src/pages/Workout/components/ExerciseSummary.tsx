@@ -1,3 +1,5 @@
+import equipment from "../../../enums/equipment";
+import useNameFromEnum from "../../../hooks/useNameFromEnum";
 import { WorkoutExerciseSelection } from "../../../interfaces/WorkoutInformation";
 
 interface ExercisesSummaryProps {
@@ -9,6 +11,7 @@ function ExercisesSummary(props: ExercisesSummaryProps) {
     <>
       {props.exercises.map((element) => (
         <p key={element.exerciseEquipmentLinkId}>
+          {useNameFromEnum(element.equipmentId, equipment)}{" "}
           {element.exerciseName} - {element.sets}x{element.reps}
         </p>
       ))}
