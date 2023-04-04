@@ -26,7 +26,6 @@ function ViewRoutines() {
       })
       .then((res) => {
         setRoutineList(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         setIsError(true);

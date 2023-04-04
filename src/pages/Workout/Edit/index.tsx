@@ -27,8 +27,8 @@ function EditRoutine() {
           token: localStorage.token,
         },
       })
-      .then((res) => {
-        navigate("/workout/routines");
+      .then((_res) => {
+        navigate("/workout/routine-list");
       })
       .catch((err) => {
         setIsError(true);

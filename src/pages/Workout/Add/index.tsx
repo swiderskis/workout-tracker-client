@@ -1,20 +1,8 @@
-import { useEffect, useState } from "react";
-import ButtonPrimary from "../../../components/Button/ButtonPrimary";
-import day from "../../../enums/day";
-import FormAddEditWorkout from "../components/FormAddEditWorkout";
-import {
-  WorkoutRoutine,
-  WorkoutRoutineDay,
-} from "../../../interfaces/WorkoutInformation";
-import ButtonSecondary from "../../../components/Button/ButtonSecondary";
-import useNameFromEnum from "../../../hooks/useNameFromEnum";
-import ExercisesSummary from "../components/ExerciseSummary";
+import { WorkoutRoutine } from "../../../interfaces/WorkoutInformation";
 import "react-datepicker/dist/react-datepicker.css";
-import DatePick from "../components/DatePick";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useErrorResponse from "../../../hooks/useErrorResponse";
-import DisplayError from "../../../components/DisplayError";
 import Routine from "../components/Routine";
 
 function AddRoutine() {
@@ -57,7 +45,7 @@ function AddRoutine() {
         },
       })
       .then((_res) => {
-        navigate("/");
+        navigate("/workout/routine-list");
       })
       .catch((err) => {
         setIsError(true);
