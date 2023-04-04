@@ -4,6 +4,7 @@ import Loading from "../../Loading";
 import useErrorResponse from "../../../hooks/useErrorResponse";
 import DisplayError from "../../../components/DisplayError";
 import { Link, Navigate } from "react-router-dom";
+import useFormatDate from "../../../hooks/useFormatDate";
 
 interface RoutineDetails {
   routineId: number;
@@ -73,16 +74,8 @@ function ViewRoutines() {
         <tbody>
           {routineList.map((element) => (
             <tr key={element.routineId}>
-              <td>
-                {`${element.startDate}`.substring(8, 10)}/
-                {`${element.startDate}`.substring(5, 7)}/
-                {`${element.startDate}`.substring(0, 4)}
-              </td>
-              <td>
-                {`${element.endDate}`.substring(8, 10)}/
-                {`${element.endDate}`.substring(5, 7)}/
-                {`${element.endDate}`.substring(0, 4)}
-              </td>
+              <td>{useFormatDate(element.startDate)}</td>
+              <td>{useFormatDate(element.endDate)}</td>
               <td>
                 <Link to={`/workout/routine?routine-id=${element.routineId}`}>
                   View
