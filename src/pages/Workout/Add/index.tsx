@@ -65,7 +65,9 @@ function AddRoutine() {
       });
   };
 
-  return <Routine submitAction={handleSubmit} />;
+  return (
+    <Routine submitButtonValue="Create routine" submitAction={handleSubmit} />
+  );
 }
 
 export default AddRoutine;

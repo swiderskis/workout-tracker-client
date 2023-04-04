@@ -19,6 +19,7 @@ interface RoutineProps {
     setIsError: (value: React.SetStateAction<boolean>) => void,
     setErrorText: (value: React.SetStateAction<string>) => void
   ) => Promise<void>;
+  submitButtonValue: string;
   routine?: WorkoutRoutine;
 }
 
@@ -171,7 +172,7 @@ function Routine(props: RoutineProps) {
             ))}
           </div>
           <div className="w3-padding-small">
-            <ButtonPrimary value="Create routine" onClick={onSubmit} />
+            <ButtonPrimary value={props.submitButtonValue} onClick={onSubmit} />
           </div>
         </>
       )}

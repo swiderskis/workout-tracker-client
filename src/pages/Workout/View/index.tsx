@@ -26,6 +26,7 @@ function ViewRoutines() {
       })
       .then((res) => {
         setRoutineList(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         setIsError(true);
@@ -73,8 +74,16 @@ function ViewRoutines() {
         <tbody>
           {routineList.map((element) => (
             <tr key={element.routineId}>
-              <td>{`${element.startDate}`.substring(0, 10)}</td>
-              <td>{`${element.endDate}`.substring(0, 10)}</td>
+              <td>
+                {`${element.startDate}`.substring(8, 10)}/
+                {`${element.startDate}`.substring(5, 7)}/
+                {`${element.startDate}`.substring(0, 4)}
+              </td>
+              <td>
+                {`${element.endDate}`.substring(8, 10)}/
+                {`${element.endDate}`.substring(5, 7)}/
+                {`${element.endDate}`.substring(0, 4)}
+              </td>
               <td>
                 <Link to={`/workout/routine?routine-id=${element.routineId}`}>
                   View

@@ -27,7 +27,9 @@ function EditRoutine() {
           token: localStorage.token,
         },
       })
-      .then((res) => {})
+      .then((res) => {
+        navigate("/workout/routines");
+      })
       .catch((err) => {
         setIsError(true);
         setErrorText(useErrorResponse(err));
@@ -68,7 +70,13 @@ function EditRoutine() {
 
   if (isError) return <DisplayError text={errorText} />;
 
-  return <Routine submitAction={submitAction} routine={routine} />;
+  return (
+    <Routine
+      submitButtonValue="Update routine"
+      submitAction={submitAction}
+      routine={routine}
+    />
+  );
 }
 
 export default EditRoutine;
