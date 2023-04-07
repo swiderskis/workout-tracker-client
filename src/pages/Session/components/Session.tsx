@@ -6,6 +6,7 @@ import AddEditSession from "./AddEditSession";
 import { SessionDetails } from "../../../interfaces/SessionInformation";
 import DisplayError from "../../../components/DisplayError";
 import axios from "axios";
+import useErrorResponse from "../../../hooks/useErrorResponse";
 
 const sessionDefault: SessionDetails = {
   name: "",
@@ -53,7 +54,10 @@ function Session() {
 
         setSession(currSession);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setIsError(true);
+        setErrorText(useErrorResponse(err));
+      });
   };
 
   return (

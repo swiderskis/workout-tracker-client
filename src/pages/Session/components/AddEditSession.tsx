@@ -200,7 +200,13 @@ function AddEditSession(props: AddEditSessionProps) {
       <p />
       <ButtonPrimary
         value={submitParameters.value}
-        onClick={submitParameters.onSubmit}
+        onClick={async () => {
+          const { isError, errorText } = await submitParameters.onSubmit(
+            session
+          );
+          props.setIsError(isError);
+          props.setErrorText(errorText);
+        }}
       />
       <Modal modalShown={modalShown} hideModal={hideModal}>
         {modalIsError ? <DisplayError text={modalErrorText} /> : <></>}
