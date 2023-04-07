@@ -3,10 +3,7 @@ import DatePick from "../../../components/DatePick";
 import ButtonPrimary from "../../../components/Button/ButtonPrimary";
 import ButtonSecondary from "../../../components/Button/ButtonSecondary";
 import AddEditSession from "./AddEditSession";
-import {
-  SessionDetails,
-  SessionExercise,
-} from "../../../interfaces/SessionInformation";
+import { SessionDetails } from "../../../interfaces/SessionInformation";
 import DisplayError from "../../../components/DisplayError";
 import axios from "axios";
 

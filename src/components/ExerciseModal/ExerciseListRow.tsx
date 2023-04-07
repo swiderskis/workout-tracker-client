@@ -1,11 +1,11 @@
 import { useState } from "react";
-import ButtonSpan from "../../../../components/Button/ButtonSpan";
-import SelectInput from "../../../../components/Form/SelectInput";
-import equipment from "../../../../enums/equipment";
-import muscleGroup from "../../../../enums/muscleGroup";
-import useNameFromEnum from "../../../../hooks/useNameFromEnum";
-import { WorkoutExerciseInfo } from "../../../../interfaces/WorkoutInformation";
-import "../../style.css";
+import ButtonSpan from "../Button/ButtonSpan";
+import SelectInput from "../Form/SelectInput";
+import equipment from "../../enums/equipment";
+import muscleGroup from "../../enums/muscleGroup";
+import useNameFromEnum from "../../hooks/useNameFromEnum";
+import { WorkoutExerciseInfo } from "../../interfaces/WorkoutInformation";
+import "./style.css";
 
 interface ExerciseListRowProps {
   exerciseInfo: WorkoutExerciseInfo;

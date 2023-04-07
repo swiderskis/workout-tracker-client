@@ -9,7 +9,7 @@ import {
   WorkoutExerciseSelection,
   WorkoutRoutineDay,
 } from "../../../interfaces/WorkoutInformation";
-import ExerciseList from "../Add/Modal/ExerciseList";
+import ExerciseList from "../../../components/ExerciseModal/ExerciseList";
 import WorkoutExerciseRow from "../Add/WorkoutExercisesRow";
 import "../style.css";
 import useNameFromEnum from "../../../hooks/useNameFromEnum";

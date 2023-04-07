@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import SessionExerciseElement from "./SessionExerciseElement";
 import {
   SessionDetails,
@@ -7,6 +7,11 @@ import {
 import ButtonSecondary from "../../../components/Button/ButtonSecondary";
 import TextInput from "../../../components/Form/TextInput";
 import ButtonSpan from "../../../components/Button/ButtonSpan";
+import ButtonPrimary from "../../../components/Button/ButtonPrimary";
+import { SubmitParameters } from "../contexts/SubmitParameters";
+import Modal from "../../../components/Modal";
+import ExerciseList from "../../../components/ExerciseModal/ExerciseList";
+import DisplayError from "../../../components/DisplayError";
 
 interface AddEditSessionProps {
   session: SessionDetails;
@@ -16,6 +21,10 @@ interface AddEditSessionProps {
 
 function AddEditSession(props: AddEditSessionProps) {
   const [session, setSession] = useState(props.session);
+  const [modalShown, setModalShown] = useState(false);
+  const [modalIsError, setModalIsError] = useState(false);
+  const [modalErrorText, setModalErrorText] = useState("");
+  const submitParameters = useContext(SubmitParameters);
 
   // Updates name of session
   const setSessionName = (name: string) => {
@@ -82,20 +91,52 @@ function AddEditSession(props: AddEditSessionProps) {
   };
 
   // Adds another exercise to the session
-  const addExercise = () => {
+  const pushExercise = (
+    _exerciseId: number,
+    exerciseName: string,
+    _muscleGroupId: number,
+    exerciseEquipmentLinkId: number,
+    equipmentId: number
+  ) => {
     const currSession: SessionDetails = structuredClone(session);
 
-    const blankExercise: SessionExercise = {
-      exerciseEquipmentLinkId: -1,
-      exerciseName: "",
-      equipmentId: 0,
+    // Checks if equipment has been chosen
+    if (exerciseEquipmentLinkId === -1 || equipmentId === -1) {
+      return {
+        success: false,
+        errorMessage: "Please choose the equipment for this exercise",
+      };
+    }
+
+    // Checks if equipment exercise combination has already been added to workout
+    let exerciseAdded = false;
+
+    session.exercises.forEach((exercise) => {
+      if (exercise.exerciseEquipmentLinkId === exerciseEquipmentLinkId) {
+        exerciseAdded = true;
+      }
+    });
+
+    if (exerciseAdded)
+      return {
+        success: false,
+        errorMessage:
+          "This exercise & equipment combination is already in your workout",
+      };
+
+    const exercise: SessionExercise = {
+      exerciseEquipmentLinkId: exerciseEquipmentLinkId,
+      exerciseName: exerciseName,
+      equipmentId: equipmentId,
       weight: [0],
       reps: [-1],
     };
 
-    currSession.exercises.push(blankExercise);
+    currSession.exercises.push(exercise);
 
     setSession(currSession);
+
+    return { success: true, errorMessage: "" };
   };
 
   // Removes exercise from session
@@ -112,6 +153,15 @@ function AddEditSession(props: AddEditSessionProps) {
     currSession.exercises.splice(exerciseIndex, 1);
 
     setSession(currSession);
+  };
+
+  const modalError = (error: boolean, errorText: string) => {
+    setModalIsError(error);
+    setModalErrorText(errorText);
+  };
+
+  const hideModal = () => {
+    setModalShown(false);
   };
 
   useEffect(() => props.setIsError(false), [session]);
@@ -143,7 +193,23 @@ function AddEditSession(props: AddEditSessionProps) {
         </Fragment>
       ))}
       <p />
-      <ButtonSecondary value="Add another exercise" onClick={addExercise} />
+      <ButtonSecondary
+        value="Add another exercise"
+        onClick={() => setModalShown(true)}
+      />
+      <p />
+      <ButtonPrimary
+        value={submitParameters.value}
+        onClick={submitParameters.onSubmit}
+      />
+      <Modal modalShown={modalShown} hideModal={hideModal}>
+        {modalIsError ? <DisplayError text={modalErrorText} /> : <></>}
+        <ExerciseList
+          modalError={modalError}
+          hideModal={hideModal}
+          pushExercise={pushExercise}
+        />
+      </Modal>
     </>
   );
 }

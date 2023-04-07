@@ -1,13 +1,13 @@
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
-import SelectInput from "../../../../components/Form/SelectInput";
-import TextInput from "../../../../components/Form/TextInput";
-import muscleGroup from "../../../../enums/muscleGroup";
-import useErrorResponse from "../../../../hooks/useErrorResponse";
-import { WorkoutExerciseInfo } from "../../../../interfaces/WorkoutInformation";
-import Loading from "../../../Loading";
+import SelectInput from "../Form/SelectInput";
+import TextInput from "../Form/TextInput";
+import muscleGroup from "../../enums/muscleGroup";
+import useErrorResponse from "../../hooks/useErrorResponse";
+import { WorkoutExerciseInfo } from "../../interfaces/WorkoutInformation";
+import Loading from "../../pages/Loading";
 import ExerciseListRow from "./ExerciseListRow";
-import "../../style.css";
+import "./style.css";
 import { Link } from "react-router-dom";
 
 interface ExerciseListProps {
