@@ -10,7 +10,7 @@ import ButtonSecondary from "../../../components/Button/ButtonSecondary";
 import useNameFromEnum from "../../../hooks/useNameFromEnum";
 import ExercisesSummary from "./ExerciseSummary";
 import "react-datepicker/dist/react-datepicker.css";
-import DatePick from "../components/DatePick";
+import DatePick from "../../../components/DatePick";
 import DisplayError from "../../../components/DisplayError";
 
 interface RoutineProps {
@@ -140,7 +140,7 @@ function Routine(props: RoutineProps) {
             <DatePick
               startDate={routine?.startDate as Date}
               endDate={routine?.endDate as Date}
-              onChange={updateRoutineDates}
+              rangeOnChange={updateRoutineDates}
             />
           </div>
           <div className="w3-row">

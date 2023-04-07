@@ -4,8 +4,9 @@ import "react-datepicker/dist/react-datepicker.css";
 
 interface DatePickProps {
   startDate: Date;
-  endDate: Date;
-  onChange: (startDate: Date, endDate: Date) => void;
+  endDate?: Date;
+  singleOnChange?: (startDate: Date) => void;
+  rangeOnChange?: (startDate: Date, endDate: Date) => void;
 }
 
 function DatePick(props: DatePickProps) {
@@ -29,15 +30,21 @@ function DatePick(props: DatePickProps) {
       dateFormat={"dd/MM/yyyy"}
       selected={props.startDate}
       onChange={(dates) => {
-        const [start, end] = dates as [Date, Date];
-        props.onChange(start, end);
+        if (props.rangeOnChange) {
+          const [start, end] = dates as [Date, Date];
+          props.rangeOnChange(start, end);
+        } else if (props.singleOnChange) {
+          const date = dates as unknown as Date;
+
+          props.singleOnChange(date);
+        }
       }}
       customInput={
         <DatePickButton value={`${props.startDate}`} onClick={() => {}} />
       }
       startDate={props.startDate}
-      endDate={props.endDate}
-      selectsRange={true}
+      endDate={props?.endDate}
+      selectsRange={props.rangeOnChange ? true : undefined}
     />
   );
 }

@@ -28,6 +28,9 @@ function Navbar() {
         <NavItem path="/workout/create-routine" value="Create new routine" />
         <NavItem path="/workout/routine-list" value="View routine(s)" />
       </NavDropdown>
+      <NavDropdown name="Session">
+        <NavItem path="/session/log" value="Log new session" />
+      </NavDropdown>
       <button
         className="w3-button w3-ripple"
         style={{ float: "right" }}

@@ -16,6 +16,8 @@ import WorkoutHome from "./pages/Workout/Home";
 import AddRoutine from "./pages/Workout/Add";
 import ViewRoutines from "./pages/Workout/View";
 import EditRoutine from "./pages/Workout/Edit";
+import SessionHome from "./pages/Session/Home";
+import AddSession from "./pages/Session/Add";
 
 axios.defaults.baseURL = `http://localhost:5000`;
 
@@ -62,6 +64,16 @@ function App() {
               <Route path="create-routine" element={<AddRoutine />} />
               <Route path="routine-list" element={<ViewRoutines />} />
               <Route path="routine" element={<EditRoutine />} />
+            </Route>
+            <Route
+              path="session"
+              element={
+                <PrivateRoute>
+                  <SessionHome />
+                </PrivateRoute>
+              }
+            >
+              <Route path="log" element={<AddSession />} />
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />

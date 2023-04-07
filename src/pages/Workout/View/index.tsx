@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Loading from "../../Loading";
 import useErrorResponse from "../../../hooks/useErrorResponse";
 import DisplayError from "../../../components/DisplayError";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useFormatDate from "../../../hooks/useFormatDate";
 
 interface RoutineDetails {
@@ -50,14 +50,6 @@ function ViewRoutines() {
         No routines added, click <Link to="/workout/create-routine">here</Link>{" "}
         to create one!
       </p>
-    );
-  }
-
-  if (routineList.length === 1) {
-    return (
-      <Navigate
-        to={`/workout/routine?routine-id=${routineList[0].routineId}`}
-      />
     );
   }
 
