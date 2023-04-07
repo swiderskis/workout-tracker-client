@@ -1,4 +1,4 @@
-import { WorkoutRoutine } from "../../../interfaces/WorkoutInformation";
+import { WorkoutRoutineSubmit } from "../../../interfaces/WorkoutInformation";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -10,12 +10,12 @@ function AddRoutine() {
 
   // Submit routine information to database
   const handleSubmit = async (
-    routine: WorkoutRoutine,
+    routine: WorkoutRoutineSubmit,
     setIsError: (value: React.SetStateAction<boolean>) => void,
     setErrorText: (value: React.SetStateAction<string>) => void
   ) => {
     // Check end date is after start date
-    if (routine.startDate.toDateString() === routine.endDate.toDateString()) {
+    if (routine.startDate === routine.endDate) {
       setIsError(true);
       setErrorText(
         "Please ensure the selected end date is after the selected start date"

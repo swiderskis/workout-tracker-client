@@ -2,7 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import useErrorResponse from "../../../hooks/useErrorResponse";
-import { WorkoutRoutine } from "../../../interfaces/WorkoutInformation";
+import {
+  WorkoutRoutine,
+  WorkoutRoutineSubmit,
+} from "../../../interfaces/WorkoutInformation";
 import Loading from "../../Loading";
 import DisplayError from "../../../components/DisplayError";
 import Routine from "../components/Routine";
@@ -17,7 +20,7 @@ function EditRoutine() {
 
   // Sends updated routine info to database
   const submitAction = async (
-    routine: WorkoutRoutine,
+    routine: WorkoutRoutineSubmit,
     setIsError: (value: React.SetStateAction<boolean>) => void,
     setErrorText: (value: React.SetStateAction<string>) => void
   ) => {

@@ -5,6 +5,7 @@ import FormAddEditWorkout from "../components/FormAddEditWorkout";
 import {
   WorkoutRoutine,
   WorkoutRoutineDay,
+  WorkoutRoutineSubmit,
 } from "../../../interfaces/WorkoutInformation";
 import ButtonSecondary from "../../../components/Button/ButtonSecondary";
 import useNameFromEnum from "../../../hooks/useNameFromEnum";
@@ -15,7 +16,7 @@ import DisplayError from "../../../components/DisplayError";
 
 interface RoutineProps {
   submitAction: (
-    routine: WorkoutRoutine,
+    routine: WorkoutRoutineSubmit,
     setIsError: (value: React.SetStateAction<boolean>) => void,
     setErrorText: (value: React.SetStateAction<string>) => void
   ) => Promise<void>;
@@ -34,11 +35,13 @@ function Routine(props: RoutineProps) {
   const onSubmit = async () => {
     setIsError(false);
 
-    await props.submitAction(
-      routine as WorkoutRoutine,
-      setIsError,
-      setErrorText
-    );
+    const routineSubmit: WorkoutRoutineSubmit = {
+      startDate: (routine as WorkoutRoutine).startDate.toUTCString(),
+      endDate: (routine as WorkoutRoutine).endDate.toUTCString(),
+      workoutRoutineDays: (routine as WorkoutRoutine).workoutRoutineDays,
+    };
+
+    await props.submitAction(routineSubmit, setIsError, setErrorText);
   };
 
   // Initialise routine object

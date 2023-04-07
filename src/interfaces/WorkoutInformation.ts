@@ -27,3 +27,9 @@ export interface WorkoutRoutine {
   endDate: Date;
   workoutRoutineDays: WorkoutRoutineDay[];
 }
+
+export interface WorkoutRoutineSubmit {
+  startDate: string;
+  endDate: string;
+  workoutRoutineDays: WorkoutRoutineDay[];
+}
