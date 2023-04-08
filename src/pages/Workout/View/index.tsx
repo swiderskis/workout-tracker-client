@@ -20,7 +20,7 @@ function ViewRoutines() {
 
   const getRoutines = async () => {
     await axios
-      .get(`/workout/routine-list`, {
+      .get(`/routine/list`, {
         headers: {
           token: localStorage.token,
         },
@@ -47,8 +47,8 @@ function ViewRoutines() {
   if (routineList.length === 0) {
     return (
       <p>
-        No routines added, click <Link to="/workout/create-routine">here</Link>{" "}
-        to create one!
+        No routines added, click <Link to="/routine/create">here</Link> to
+        create one!
       </p>
     );
   }
@@ -69,7 +69,7 @@ function ViewRoutines() {
               <td>{useFormatDate(element.startDate)}</td>
               <td>{useFormatDate(element.endDate)}</td>
               <td>
-                <Link to={`/workout/routine?routine-id=${element.routineId}`}>
+                <Link to={`/routine/update?routine-id=${element.routineId}`}>
                   View
                 </Link>
               </td>

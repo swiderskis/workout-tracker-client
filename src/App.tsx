@@ -54,16 +54,16 @@ function App() {
               <Route path="delete" element={<DeleteExercise />} />
             </Route>
             <Route
-              path="workout"
+              path="routine"
               element={
                 <PrivateRoute>
                   <WorkoutHome />
                 </PrivateRoute>
               }
             >
-              <Route path="create-routine" element={<AddRoutine />} />
-              <Route path="routine-list" element={<ViewRoutines />} />
-              <Route path="routine" element={<EditRoutine />} />
+              <Route path="create" element={<AddRoutine />} />
+              <Route path="list" element={<ViewRoutines />} />
+              <Route path="update" element={<EditRoutine />} />
             </Route>
             <Route
               path="session"

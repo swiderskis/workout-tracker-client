@@ -25,13 +25,13 @@ function EditRoutine() {
     setErrorText: (value: React.SetStateAction<string>) => void
   ) => {
     await axios
-      .put(`/workout/routine/${searchParams.get("routine-id")}`, routine, {
+      .put(`/routine/${searchParams.get("routine-id")}`, routine, {
         headers: {
           token: localStorage.token,
         },
       })
       .then((_res) => {
-        navigate("/workout/routine-list");
+        navigate("/routine/list");
       })
       .catch((err) => {
         setIsError(true);
@@ -41,10 +41,10 @@ function EditRoutine() {
 
   // Loads current routine data from database
   const getRoutine = async () => {
-    if (!searchParams.get("routine-id")) navigate("/workout/routine-list");
+    if (!searchParams.get("routine-id")) navigate("/routine/list");
 
     await axios
-      .get(`/workout/routine/${searchParams.get("routine-id")}`, {
+      .get(`/routine/${searchParams.get("routine-id")}`, {
         headers: {
           token: localStorage.token,
         },

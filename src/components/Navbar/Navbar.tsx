@@ -25,8 +25,8 @@ function Navbar() {
         <NavItem path="/exercise/view" value="View exercises" />
       </NavDropdown>
       <NavDropdown name="Routine">
-        <NavItem path="/workout/create-routine" value="Create new routine" />
-        <NavItem path="/workout/routine-list" value="View routine(s)" />
+        <NavItem path="/routine/create" value="Create new routine" />
+        <NavItem path="/routine/list" value="View routine(s)" />
       </NavDropdown>
       <NavDropdown name="Session">
         <NavItem path="/session/log" value="Log new session" />

@@ -32,7 +32,7 @@ function ExerciseList(props: ExerciseListProps) {
   // Loads exercise details to be inserted into modal
   const loadModalInfo = async () => {
     await axios
-      .get(`/workout/exercise-list`, {
+      .get(`/routine/exercise-list`, {
         headers: {
           token: localStorage.token,
         },

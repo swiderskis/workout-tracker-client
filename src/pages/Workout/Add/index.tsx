@@ -39,13 +39,13 @@ function AddRoutine() {
     }
 
     await axios
-      .post(`/workout/create-routine`, routine, {
+      .post(`/routine/create`, routine, {
         headers: {
           token: localStorage.token,
         },
       })
       .then((_res) => {
-        navigate("/workout/routine-list");
+        navigate("/routine/list");
       })
       .catch((err) => {
         setIsError(true);

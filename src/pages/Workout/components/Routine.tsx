@@ -181,7 +181,7 @@ function Routine(props: RoutineProps) {
             <p />
             <ButtonSecondary
               value="Back"
-              onClick={() => navigate("/workout/routine-list")}
+              onClick={() => navigate("/routine/list")}
             />
           </div>
         </>
