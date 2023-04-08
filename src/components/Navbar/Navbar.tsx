@@ -30,6 +30,7 @@ function Navbar() {
       </NavDropdown>
       <NavDropdown name="Session">
         <NavItem path="/session/log" value="Log new session" />
+        <NavItem path="/session/list" value="View sessions" />
       </NavDropdown>
       <button
         className="w3-button w3-ripple"
