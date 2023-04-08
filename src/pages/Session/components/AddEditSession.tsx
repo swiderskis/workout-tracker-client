@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import SessionExerciseElement from "./SessionExerciseElement";
 import {
   SessionDetails,
@@ -15,12 +15,12 @@ import DisplayError from "../../../components/DisplayError";
 
 interface AddEditSessionProps {
   session: SessionDetails;
+  setSession: (session: SessionDetails) => void;
   setIsError: (isError: boolean) => void;
   setErrorText: (errorText: string) => void;
 }
 
 function AddEditSession(props: AddEditSessionProps) {
-  const [session, setSession] = useState(props.session);
   const [modalShown, setModalShown] = useState(false);
   const [modalIsError, setModalIsError] = useState(false);
   const [modalErrorText, setModalErrorText] = useState("");
@@ -28,11 +28,11 @@ function AddEditSession(props: AddEditSessionProps) {
 
   // Updates name of session
   const setSessionName = (name: string) => {
-    const currSession = structuredClone(session);
+    const currSession = structuredClone(props.session);
 
     currSession.name = name;
 
-    setSession(currSession);
+    props.setSession(currSession);
   };
 
   // Update session exercise weight
@@ -41,11 +41,11 @@ function AddEditSession(props: AddEditSessionProps) {
     exerciseIndex: number,
     weightIndex: number
   ) => {
-    const currSession = structuredClone(session);
+    const currSession = structuredClone(props.session);
 
     currSession.exercises[exerciseIndex].weight[weightIndex] = weight;
 
-    setSession(currSession);
+    props.setSession(currSession);
   };
 
   // Update session exercise reps
@@ -54,26 +54,26 @@ function AddEditSession(props: AddEditSessionProps) {
     exerciseIndex: number,
     repsIndex: number
   ) => {
-    const currSession: SessionDetails = structuredClone(session);
+    const currSession: SessionDetails = structuredClone(props.session);
 
     currSession.exercises[exerciseIndex].reps[repsIndex] = reps;
 
-    setSession(currSession);
+    props.setSession(currSession);
   };
 
   // Adds a set to the exercise
   const addSet = (exerciseIndex: number) => {
-    const currSession: SessionDetails = structuredClone(session);
+    const currSession: SessionDetails = structuredClone(props.session);
 
     currSession.exercises[exerciseIndex].weight.push(0);
     currSession.exercises[exerciseIndex].reps.push(-1);
 
-    setSession(currSession);
+    props.setSession(currSession);
   };
 
   // Removes selected set from exercise
   const removeSet = (exerciseIndex: number, setIndex: number) => {
-    if (session.exercises[exerciseIndex].weight.length === 1) {
+    if (props.session.exercises[exerciseIndex].weight.length === 1) {
       props.setIsError(true);
       props.setErrorText(
         "Each exercise in the session must contain at least one set"
@@ -82,12 +82,12 @@ function AddEditSession(props: AddEditSessionProps) {
       return;
     }
 
-    const currSession: SessionDetails = structuredClone(session);
+    const currSession: SessionDetails = structuredClone(props.session);
 
     currSession.exercises[exerciseIndex].weight.splice(setIndex, 1);
     currSession.exercises[exerciseIndex].reps.splice(setIndex, 1);
 
-    setSession(currSession);
+    props.setSession(currSession);
   };
 
   // Adds another exercise to the session
@@ -98,7 +98,7 @@ function AddEditSession(props: AddEditSessionProps) {
     exerciseEquipmentLinkId: number,
     equipmentId: number
   ) => {
-    const currSession: SessionDetails = structuredClone(session);
+    const currSession: SessionDetails = structuredClone(props.session);
 
     // Checks if equipment has been chosen
     if (exerciseEquipmentLinkId === -1 || equipmentId === -1) {
@@ -111,7 +111,7 @@ function AddEditSession(props: AddEditSessionProps) {
     // Checks if equipment exercise combination has already been added to workout
     let exerciseAdded = false;
 
-    session.exercises.forEach((exercise) => {
+    props.session.exercises.forEach((exercise) => {
       if (exercise.exerciseEquipmentLinkId === exerciseEquipmentLinkId) {
         exerciseAdded = true;
       }
@@ -134,25 +134,25 @@ function AddEditSession(props: AddEditSessionProps) {
 
     currSession.exercises.push(exercise);
 
-    setSession(currSession);
+    props.setSession(currSession);
 
     return { success: true, errorMessage: "" };
   };
 
   // Removes exercise from session
   const removeExercise = (exerciseIndex: number) => {
-    if (session.exercises.length === 1) {
+    if (props.session.exercises.length === 1) {
       props.setIsError(true);
       props.setErrorText("Each session must contain at least one exercise");
 
       return;
     }
 
-    const currSession: SessionDetails = structuredClone(session);
+    const currSession: SessionDetails = structuredClone(props.session);
 
     currSession.exercises.splice(exerciseIndex, 1);
 
-    setSession(currSession);
+    props.setSession(currSession);
   };
 
   const modalError = (error: boolean, errorText: string) => {
@@ -164,18 +164,16 @@ function AddEditSession(props: AddEditSessionProps) {
     setModalShown(false);
   };
 
-  useEffect(() => props.setIsError(false), [session]);
-
   return (
     <>
       <TextInput
         label="Session name"
         name="session-name"
-        value={session.name}
+        value={props.session.name}
         onChange={setSessionName}
       />
       <p />
-      {session.exercises.map((element, index) => (
+      {props.session.exercises.map((element, index) => (
         <Fragment key={element.exerciseEquipmentLinkId}>
           <SessionExerciseElement
             exercise={element}
@@ -194,18 +192,18 @@ function AddEditSession(props: AddEditSessionProps) {
       ))}
       <p />
       <ButtonSecondary
-        value="Add another exercise"
+        value={
+          props.session.exercises.length === 0
+            ? "Add an exercise"
+            : "Add another exercise"
+        }
         onClick={() => setModalShown(true)}
       />
       <p />
       <ButtonPrimary
         value={submitParameters.value}
         onClick={async () => {
-          const { isError, errorText } = await submitParameters.onSubmit(
-            session
-          );
-          props.setIsError(isError);
-          props.setErrorText(errorText);
+          await submitParameters.onSubmit(props.session);
         }}
       />
       <Modal modalShown={modalShown} hideModal={hideModal}>

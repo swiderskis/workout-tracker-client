@@ -3,7 +3,5 @@ import { SessionDetails } from "../../../interfaces/SessionInformation";
 
 export const SubmitParameters = createContext({
   value: "",
-  onSubmit: async (session: SessionDetails) => {
-    return { isError: false, errorText: "" };
-  },
+  onSubmit: async (session: SessionDetails) => {},
 });

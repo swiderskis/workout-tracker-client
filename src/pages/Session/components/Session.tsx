@@ -4,9 +4,13 @@ import ButtonPrimary from "../../../components/Button/ButtonPrimary";
 import ButtonSecondary from "../../../components/Button/ButtonSecondary";
 import AddEditSession from "./AddEditSession";
 import { SessionDetails } from "../../../interfaces/SessionInformation";
-import DisplayError from "../../../components/DisplayError";
 import axios from "axios";
 import useErrorResponse from "../../../hooks/useErrorResponse";
+
+interface SessionProps {
+  setIsError: (isError: boolean) => void;
+  setErrorText: (errorText: string) => void;
+}
 
 const sessionDefault: SessionDetails = {
   name: "",
@@ -14,9 +18,7 @@ const sessionDefault: SessionDetails = {
   exercises: [],
 };
 
-function Session() {
-  const [isError, setIsError] = useState(false);
-  const [errorText, setErrorText] = useState("");
+function Session(props: SessionProps) {
   const [session, setSession] = useState(sessionDefault);
   const [showAddEditSession, setShowAddEditSession] = useState(false);
 
@@ -55,22 +57,22 @@ function Session() {
         setSession(currSession);
       })
       .catch((err) => {
-        setIsError(true);
-        setErrorText(useErrorResponse(err));
+        props.setIsError(true);
+        props.setErrorText(useErrorResponse(err));
       });
   };
 
   return (
     <>
-      {isError ? <DisplayError text={errorText} /> : null}
       Session date:
       <DatePick startDate={session.date} singleOnChange={changeSessionDate} />
       <p />
       {showAddEditSession ? (
         <AddEditSession
           session={session}
-          setIsError={setIsError}
-          setErrorText={setErrorText}
+          setSession={setSession}
+          setIsError={props.setIsError}
+          setErrorText={props.setErrorText}
         />
       ) : (
         <>

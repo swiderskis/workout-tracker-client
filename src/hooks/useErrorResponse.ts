@@ -3,7 +3,7 @@ function useErrorResponse(err: any) {
   if (!err.response || err.response.status >= 500)
     return "A server error has occurred, please try again later";
 
-  return err.response.data;
+  return err.response.data as string;
 }
 
 export default useErrorResponse;
