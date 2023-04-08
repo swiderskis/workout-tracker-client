@@ -13,6 +13,7 @@ import ExercisesSummary from "./ExerciseSummary";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePick from "../../../components/DatePick";
 import DisplayError from "../../../components/DisplayError";
+import { useNavigate } from "react-router-dom";
 
 interface RoutineProps {
   submitAction: (
@@ -30,6 +31,7 @@ function Routine(props: RoutineProps) {
   const [routine, setRoutine] = useState(props.routine);
   const [hideWorkoutSummary, setHideWorkoutSummary] = useState(false);
   const [daySelection, setDaySelection] = useState(0);
+  const navigate = useNavigate();
 
   // Submit routine information to database
   const onSubmit = async () => {
@@ -176,6 +178,11 @@ function Routine(props: RoutineProps) {
           </div>
           <div className="w3-padding-small">
             <ButtonPrimary value={props.submitButtonValue} onClick={onSubmit} />
+            <p />
+            <ButtonSecondary
+              value="Back"
+              onClick={() => navigate("/workout/routine-list")}
+            />
           </div>
         </>
       )}
