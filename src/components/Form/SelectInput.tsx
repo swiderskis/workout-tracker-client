@@ -24,11 +24,9 @@ function SelectInput(props: SelectInputProps) {
 
     const currFilteredEnum: EnumObject[] = [];
 
-    props.enum.forEach((element) =>
-      props.enumFilter?.includes(element.key)
-        ? currFilteredEnum.push(element)
-        : null
-    );
+    for (let i = 0; i < props.enumFilter.length; i++) {
+      currFilteredEnum.push(props.enum[props.enumFilter[i]]);
+    }
 
     setFilteredEnum(currFilteredEnum);
   };
