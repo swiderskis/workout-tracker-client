@@ -1,3 +1,4 @@
+import * as dotenv from "dotenv";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -21,7 +22,9 @@ import AddSession from "./pages/Session/Add";
 import ViewSessions from "./pages/Session/View";
 import EditSession from "./pages/Session/Edit";
 
-axios.defaults.baseURL = `http://localhost:5000`;
+dotenv.config();
+
+axios.defaults.baseURL = process.env.AXIOS_BASE_URL;
 
 function App() {
   return (
