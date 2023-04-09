@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePick from "../../../components/DatePick";
 import ButtonPrimary from "../../../components/Button/ButtonPrimary";
 import ButtonSecondary from "../../../components/Button/ButtonSecondary";
@@ -10,6 +10,7 @@ import useErrorResponse from "../../../hooks/useErrorResponse";
 interface SessionProps {
   setIsError: (isError: boolean) => void;
   setErrorText: (errorText: string) => void;
+  session?: SessionDetails;
 }
 
 const sessionDefault: SessionDetails = {
@@ -19,7 +20,9 @@ const sessionDefault: SessionDetails = {
 };
 
 function Session(props: SessionProps) {
-  const [session, setSession] = useState(sessionDefault);
+  const [session, setSession] = useState(
+    props.session ? props.session : sessionDefault
+  );
   const [showAddEditSession, setShowAddEditSession] = useState(false);
 
   const changeSessionDate = (date: Date) => {
@@ -37,7 +40,8 @@ function Session(props: SessionProps) {
     setShowAddEditSession(true);
   };
 
-  // Loads routine session details
+  // Loads routine session details from saved workout
+  // Done when adding new session
   const loadRoutineSession = async () => {
     const timestamp = session.date.toJSON();
     const date = timestamp.slice(0, 10);
@@ -61,6 +65,17 @@ function Session(props: SessionProps) {
         props.setErrorText(useErrorResponse(err));
       });
   };
+
+  // Sets session details if they are passed to component
+  // Done when editing existing session
+  const loadSessionFromProp = () => {
+    if (props.session) {
+      setSession(props.session);
+      setShowAddEditSession(true);
+    }
+  };
+
+  useEffect(() => loadSessionFromProp(), []);
 
   return (
     <>

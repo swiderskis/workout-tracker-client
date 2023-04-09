@@ -19,6 +19,7 @@ import EditRoutine from "./pages/Workout/Edit";
 import SessionHome from "./pages/Session/Home";
 import AddSession from "./pages/Session/Add";
 import ViewSessions from "./pages/Session/View";
+import EditSession from "./pages/Session/Edit";
 
 axios.defaults.baseURL = `http://localhost:5000`;
 
@@ -76,6 +77,7 @@ function App() {
             >
               <Route path="log" element={<AddSession />} />
               <Route path="list" element={<ViewSessions />} />
+              <Route path="edit" element={<EditSession />} />
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />

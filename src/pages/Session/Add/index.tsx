@@ -6,8 +6,6 @@ import {
 import Session from "../components/Session";
 import { SubmitParameters } from "../contexts/SubmitParameters";
 import { useNavigate } from "react-router-dom";
-import useNameFromEnum from "../../../hooks/useNameFromEnum";
-import equipment from "../../../enums/equipment";
 import { useState } from "react";
 import DisplayError from "../../../components/DisplayError";
 import useErrorResponse from "../../../hooks/useErrorResponse";
@@ -45,20 +43,11 @@ function AddSession() {
       return;
     }
 
-    // Structured clone to submit session exercise name as equipment + exercise name
-    const sessionClone: SessionDetails = structuredClone(session);
-
-    sessionClone.exercises.forEach((exercise, index) => {
-      sessionClone.exercises[index].exerciseName = `${useNameFromEnum(
-        exercise.equipmentId,
-        equipment
-      )} ${exercise.exerciseName}`;
-    });
-
+    // session submit object to change date to string
     const sessionSubmit: SessionSubmitDetails = {
-      name: sessionClone.name,
-      date: sessionClone.date.toDateString(),
-      exercises: sessionClone.exercises,
+      name: session.name,
+      date: session.date.toDateString(),
+      exercises: session.exercises,
     };
 
     await axios
