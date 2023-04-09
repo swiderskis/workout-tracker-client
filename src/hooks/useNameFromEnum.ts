@@ -5,7 +5,7 @@ function useNameFromEnum(id: number, enumObject: EnumObject[]) {
   let name = "";
 
   enumObject.findIndex((enumObject) => {
-    if (enumObject.key === id) name = enumObject.value;
+    if (enumObject.key == id) name = enumObject.value;
   });
 
   return name;
