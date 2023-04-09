@@ -83,11 +83,13 @@ function FormAddEditExercise(props: FormAddEditExerciseProps) {
 
   // Set whether checkboxes are ticked or unticked when component is loaded
   const setCheckboxes = () => {
-    equipmentCheckbox.forEach((_element, index) => {
-      equipmentSelection.includes(index)
-        ? (equipmentCheckbox[index] = true)
-        : null;
-    });
+    const equipmentCheckboxCopy = equipmentCheckbox.slice(0);
+
+    for (let i = 0; i < equipmentSelection.length; i++) {
+      equipmentCheckboxCopy[equipmentSelection[i]] = true;
+    }
+
+    setEquipmentCheckbox(equipmentCheckboxCopy);
   };
 
   useEffect(() => setCheckboxes(), [equipmentSelection]);
