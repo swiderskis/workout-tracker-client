@@ -27,7 +27,13 @@ function ExerciseListRow(props: ExerciseListRowProps) {
     const equipmentIds = props.exerciseInfo.equipmentIds;
     const linkIds = props.exerciseInfo.exerciseEquipmentLinkIds;
 
-    const selectedLink = linkIds[equipmentIds.indexOf(selectedEquipment)];
+    let currSelectedLink = -1;
+
+    for (let i = 0; i < equipmentIds.length; i++) {
+      if (equipmentIds[i] == selectedEquipment) currSelectedLink = linkIds[i];
+    }
+
+    const selectedLink = currSelectedLink;
 
     setLinkIdSelection(selectedLink);
     setEquipmentIdSelection(selectedEquipment);
