@@ -5,7 +5,7 @@ import axios from "axios";
 import useErrorResponse from "../../../hooks/useErrorResponse";
 import useFormatDate from "../../../hooks/useFormatDate";
 import ButtonSpan from "../../../components/Button/ButtonSpan";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface SessionList {
   sessionId: number;
@@ -43,6 +43,15 @@ function ViewSessions() {
   if (loading) return <Loading />;
 
   if (isError) return <DisplayError text={errorText} />;
+
+  if (sessionList.length === 0) {
+    return (
+      <p>
+        No sessions added, click <Link to="/session/log">here</Link> to create
+        one!
+      </p>
+    );
+  }
 
   return (
     <>
