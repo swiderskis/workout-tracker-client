@@ -1,6 +1,6 @@
 # Workout Tracker
 
-<img src="docs/images/addexercise.png" alt="Add exercise screen" width="40%" height="40%" />
+<img src="docs/images/addexercise.png" alt="Add exercise screen" width="60%" height="60%" />
 
 ## About
 
