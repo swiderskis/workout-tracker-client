@@ -1,5 +1,7 @@
 # Workout Tracker
 
+<img src="docs/images/addexercise.png" alt="Add exercise screen" width="40%" height="40%" />
+
 ## About
 
 A workout tracker allowing users to create weekly workout plans 🏋️‍♂️
